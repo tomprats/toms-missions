@@ -1,10 +1,16 @@
 class MissionariesController < ApplicationController
+  before_filter :require_admin, only: :create
+
   def index
     @missionaries = Missionary.all
   end
 
   def show
-    @missionary = Missionary.find_by(username: params[:username])
+    if params[:username]
+      @missionary = Missionary.find_by(username: params[:username])
+    else
+      @missionary = current_user
+    end
   end
 
   def edit
@@ -29,9 +35,6 @@ class MissionariesController < ApplicationController
     else
       @missionary = current_user
     end
-  end
-
-  def destroy
   end
 
   private

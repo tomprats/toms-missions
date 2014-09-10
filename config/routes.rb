@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   root "missionaries#index"
 
+  get :sign_in, to: "sessions#new"
+  post :sign_in, to: "sessions#create"
+  delete :sign_out, to: "sessions#destroy"
+
   get :missionaries, to: "missionaries#index"
   post :missionaries, to: "missionaries#create"
 
