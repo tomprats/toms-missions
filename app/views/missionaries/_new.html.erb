@@ -1,0 +1,5 @@
+<%= form_for :missionary, url: missionaries_path do |f| %>
+  <%= f.text_field :name, placeholder: "Name" %>
+  <%= f.text_field :email, placeholder: "Email" %>
+  <%= f.submit "Save" %>
+<% end %>
