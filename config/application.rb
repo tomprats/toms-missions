@@ -26,5 +26,12 @@ module TomsMissions
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+
+    ENV["IMGUR_ID"] = "17842724f0af8f9"
+    ENV["IMGUR_SECRET"] = "caaa96898dd91b7c7c0f79e4e2d4be33b6f17040"
+    ENV["IMGUR_REFRESH"] = "391dfc5560149dd2ba06edd245340dc0f40cf5ab"
+    ENV["IMGUR_TOKEN"] = ""
+    ENV["IMGUR_TIMEOUT"] = DateTime.now.to_i.to_s
+    ENV["IMGUR_USERNAME"] = "tomsmissions"
   end
 end

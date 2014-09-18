@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get :me, to: "missionaries#show"
   put :me, to: "missionaries#update"
   get "me/edit", to: "missionaries#edit", as: :edit_me
+  post :upload_profile, to: "missionaries#upload_profile"
 
   get "m/:username", to: "missionaries#show", as: :missionary
   put "m/:username", to: "missionaries#update"

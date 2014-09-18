@@ -10,4 +10,8 @@ class Missionary < ActiveRecord::Base
   def admin?
     admin
   end
+
+  def delete_image
+    Imgur.delete_image(image)
+  end
 end
