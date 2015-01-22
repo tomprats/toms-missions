@@ -9,6 +9,7 @@ gem "unirest"
 gem "sass-rails", "~> 4.0.3"
 gem "uglifier", ">= 1.3.0"
 gem "bootstrap-sass"
+gem "font-awesome-rails"
 gem "jquery-rails"
 gem "jquery-form-rails"
 gem "jquery-turbolinks"
@@ -23,3 +24,5 @@ group :development do
   gem "pry"
   gem "spring"
 end
+
+gem "rails_12factor", group: :production

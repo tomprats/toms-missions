@@ -13,3 +13,43 @@
  *= require_tree .
  *= require_self
  */
+@import "bootstrap";
+@import "variables";
+@import "font-awesome";
+
+body { padding-top: 60px; }
+.layout-container { margin: 20px; }
+
+.footer-link {
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+  img { height: 22px; }
+}
+.love-link {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+}
+
+form {
+  width: 100%;
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+}
+
+@media screen and (max-width: $grid-float-breakpoint-max) {
+  body { padding-top: 60px; }
+  .layout-container { margin: 0; }
+  .footer-link,
+  .love-link {
+    position: static;
+    text-align: center;
+    img {
+      margin: 5px auto;
+      display: block;
+      height: 50px;
+    }
+  }
+}

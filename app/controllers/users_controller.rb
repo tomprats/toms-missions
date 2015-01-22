@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-  before_filter :require_admin, only: :create
-
   def index
     @users = User.all
   end
