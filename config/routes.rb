@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get :me, to: "users#show"
   put :me, to: "users#update"
   get "me/edit", to: "users#edit", as: :edit_me
-  post :upload_profile, to: "users#upload_profile"
+  post :upload_profile_picture, to: "users#upload_profile_picture"
 
   get "m/:username", to: "users#show", as: :user
   put "m/:username", to: "users#update"

@@ -30,19 +30,12 @@ class UsersController < ApplicationController
     else
       @user = current_user
     end
-    @user.update_attributes(user_params)
-    redirect_to root_path, notice: "#{@user.name} was updated"
+    @user.update(user_params)
+    redirect_to :back, notice: "Profile was updated"
   end
 
-  def upload_profile
-    image = Image.with_imgur(
-      title: current_user.name,
-      image: params[:image],
-      album_id: Album.profile["id"],
-      user_id: current_user.id
-    )
-    current_user.image.destroy if current_user.image
-    current_user.update_attributes(image_id: image.id)
+  def upload_profile_picture
+    current_user.create_profile_picture(params[:image])
     redirect_to :back, notice: "Profile picture was updated"
   end
 

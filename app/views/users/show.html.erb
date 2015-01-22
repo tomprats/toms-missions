@@ -1,4 +1,7 @@
+<%= image_tag @user.image.link, class: "profile-image" if @user.image %>
 <%= @user.name %> | 
 <%= @user.username %> | 
 <%= @user.email %>
-<%= image_tag @user.image %>
+<% if current_user == @user %>
+  <%= link_to "Edit", edit_me_path, class: "btn btn-primary" %>
+<% end %>

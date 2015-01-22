@@ -15,7 +15,14 @@ class User < ActiveRecord::Base
     admin
   end
 
-  def delete_image
-    Imgur::Image.delete(image)
+  def create_profile_picture(blob)
+    profile = Image.with_imgur(
+      title: name,
+      image: blob,
+      album_id: Imgur::Album.profile["id"],
+      user_id: id
+    )
+    image.destroy if image
+    update(image_id: profile.id)
   end
 end

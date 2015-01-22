@@ -11,17 +11,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909222951) do
+ActiveRecord::Schema.define(version: 20140918233901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "missionaries", force: true do |t|
+  create_table "albums", force: true do |t|
+    t.integer  "imgur_id"
+    t.string   "link"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "images", force: true do |t|
+    t.integer  "imgur_id"
+    t.string   "link"
+    t.integer  "user_id"
+    t.integer  "trip_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "missions", force: true do |t|
+    t.integer "user_id"
+    t.integer "trip_id"
+    t.integer "album_id"
+  end
+
+  add_index "missions", ["trip_id", "user_id"], name: "index_missions_on_trip_id_and_user_id", using: :btree
+  add_index "missions", ["user_id", "trip_id"], name: "index_missions_on_user_id_and_trip_id", using: :btree
+
+  create_table "trips", force: true do |t|
+    t.integer  "album_id"
+    t.string   "country"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: true do |t|
+    t.integer  "album_id"
+    t.integer  "image_id"
     t.string   "password_digest"
     t.string   "name"
     t.string   "username"
     t.string   "email"
-    t.string   "image"
     t.string   "bio"
     t.string   "token"
     t.string   "admin"

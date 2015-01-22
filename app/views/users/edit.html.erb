@@ -1,16 +1,36 @@
-<h1>Edit User</h1>
-<%= form_for @user, method: :put do |f| %>
-  <%= f.text_field :name, placeholder: "Name" %>
-  <%= f.text_field :username, placeholder: "Username" %>
-  <%= f.email_field :email, placeholder: "Email" %>
-  <%= f.text_field :bio, placeholder: "Bio" %>
-  <%= f.password_field :password, placeholder: "Password" %>
-  <%= f.password_field :password_confirmation, placeholder: "Confirmation" %>
-  <%= f.submit "Save" %>
-<% end %>
-
-<h1>Add Image</h1>
-<%= form_for :image, url: upload_profile_path, html: { multipart: true } do |f| %>
-  <%= file_field_tag :image %>
-  <%= f.submit "Save" %>
-<% end %>
+<div class="row">
+  <div class="col-md-6">
+    <h1>Edit</h1>
+    <%= form_for @user, method: :put do |f| %>
+      <div class="form-group">
+        <%= f.text_field :name, placeholder: "Name", class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.text_field :username, placeholder: "Username", class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.text_field :email, placeholder: "Email", class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.text_field :bio, placeholder: "Bio", class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.password_field :password, placeholder: "Password", class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.password_field :password_confirmation, placeholder: "Password Confirmation", class: "form-control" %>
+      </div>
+      <%= f.submit "Save", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+  <div class="col-md-6 text-center">
+    <h1>Profile Image</h1>
+    <%= image_tag current_user.image.link, class: "profile-image" if current_user.image %>
+    <%= form_for :image, url: upload_profile_picture_path, html: { multipart: true } do |f| %>
+      <div class="form-group">
+        <%= file_field_tag :image, class: "form-control" %>
+      </div>
+      <%= f.submit "Save", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
