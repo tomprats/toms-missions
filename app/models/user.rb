@@ -1,4 +1,8 @@
-class Missionary < ActiveRecord::Base
+class User < ActiveRecord::Base
+  belongs_to :image
+  has_many :missions
+  has_many :trips, through: :missions
+
   has_secure_password validations: false
 
   validates_uniqueness_of :email, :username
@@ -12,6 +16,6 @@ class Missionary < ActiveRecord::Base
   end
 
   def delete_image
-    Imgur.delete_image(image)
+    Imgur::Image.delete(image)
   end
 end

@@ -4,9 +4,9 @@ class SessionsController < ApplicationController
   end
 
   def create
-    missionary = Missionary.find_by(email: params[:session][:email])
-    if missionary.try(:has_password?) && missionary.authenticate(params[:session][:password])
-      session[:missionary_id] = missionary.id
+    user = User.find_by(email: params[:session][:email])
+    if user.try(:has_password?) && user.authenticate(params[:session][:password])
+      session[:user_id] = user.id
       redirect_to root_path, notice: "Logged in"
     else
       redirect_to :back, notice: "Incorrect credentials"
@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:missionary_id] = nil
+    session[:user_id] = nil
     redirect_to root_path, notice: "Logged out"
   end
 end
