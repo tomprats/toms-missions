@@ -1,27 +1,36 @@
 module Imgur
   class Base
     def self.api_get(url)
+      tries ||= 2
       refresh_token if token_expired?
       headers = { "Authorization" => "Bearer #{ENV["IMGUR_TOKEN"]}" }
-      Unirest.get(url, headers: headers)
+      response = Unirest.get(url, headers: headers)
+      raise ImgurError if response.body["status"] >= 400
+      response
     rescue
-      raise ImgurError
+      refresh_token && (tries -= 1).zero? ? (raise ImgurError) : retry
     end
 
     def self.api_post(url, params)
+      tries ||= 2
       refresh_token if token_expired?
       headers = { "Authorization" => "Bearer #{ENV["IMGUR_TOKEN"]}" }
-      Unirest.post(url, headers: headers, parameters: params)
+      response = Unirest.post(url, headers: headers, parameters: params)
+      raise ImgurError if response.body["status"] >= 400
+      response
     rescue
-      raise ImgurError
+      refresh_token && (tries -= 1).zero? ? (raise ImgurError) : retry
     end
 
     def self.api_delete(url)
+      tries ||= 2
       refresh_token if token_expired?
       headers = { "Authorization" => "Bearer #{ENV["IMGUR_TOKEN"]}" }
-      Unirest.delete(url, headers: headers)
+      response = Unirest.delete(url, headers: headers)
+      raise ImgurError if response.body["status"] >= 400
+      response
     rescue
-      raise ImgurError
+      refresh_token && (tries -= 1).zero? ? (raise ImgurError) : retry
     end
 
     def self.refresh_token
@@ -62,6 +71,10 @@ module Imgur
       api_get(url).body["data"]
     end
 
+    def self.get(imgur_id)
+      all.select { |a| a["id"] == imgur_id }.first
+    end
+
     def self.find(title)
       all.select { |a| a["title"] == title }.first
     end
@@ -78,6 +91,14 @@ module Imgur
         description: options[:description],
         privacy: options[:privacy],
         cover: options[:cover]
+      }
+      api_post(url, params).body["data"]
+    end
+
+    def self.add_images(imgur_id, image_ids)
+      url = "https://api.imgur.com/3/album/#{imgur_id}/add"
+      params = {
+        ids: image_ids,
       }
       api_post(url, params).body["data"]
     end

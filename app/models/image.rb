@@ -9,7 +9,7 @@ class Image < ActiveRecord::Base
     user_id = options.delete(:user_id)
     image = Imgur::Image.create(options)
     create(
-      id: image["id"],
+      imgur_id: image["id"],
       link: image["link"],
       trip_id: trip_id,
       user_id: user_id
@@ -19,5 +19,7 @@ class Image < ActiveRecord::Base
   private
   def delete_image
     Imgur::Image.delete(self.imgur_id)
+  rescue
+    puts "Probably already gone"
   end
 end

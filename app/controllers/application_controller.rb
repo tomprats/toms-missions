@@ -8,6 +8,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  def require_user
+    redirect_to root_path, notice: "You are not allowed there" unless current_user
+  end
+  helper_method :require_user
+
   def require_admin
     redirect_to root_path, notice: "You are not allowed there" unless current_user && current_user.admin?
   end

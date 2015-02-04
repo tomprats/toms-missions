@@ -1,10 +1,12 @@
 class User < ActiveRecord::Base
-  belongs_to :image
+  belongs_to :image, dependent: :destroy
+  has_many :images
   has_many :missions
   has_many :trips, through: :missions
 
-  has_secure_password validations: false
+  has_secure_password validations: true
 
+  validates_presence_of :name, :email, :username
   validates_uniqueness_of :email, :username
 
   def has_password?
@@ -15,9 +17,9 @@ class User < ActiveRecord::Base
     admin
   end
 
-  def create_profile_picture(blob)
+  def update_profile_picture(blob)
     profile = Image.with_imgur(
-      title: name,
+      title: username,
       image: blob,
       album_id: Imgur::Album.profile["id"],
       user_id: id

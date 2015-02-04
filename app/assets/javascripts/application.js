@@ -15,6 +15,8 @@
 //= require turbolinks
 //= require jquery.turbolinks
 //= require bootstrap
+//= require pickadate/picker
+//= require pickadate/picker.date
 //= require_tree .
 
 $(document).ready(function() {

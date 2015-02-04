@@ -1,8 +1,7 @@
 class CreateAlbums < ActiveRecord::Migration
   def change
     create_table :albums do |t|
-      t.integer :imgur_id
-      t.string :link
+      t.string :imgur_id
 
       t.timestamps
     end

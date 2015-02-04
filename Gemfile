@@ -14,6 +14,7 @@ gem "jquery-rails"
 gem "jquery-form-rails"
 gem "jquery-turbolinks"
 gem "turbolinks"
+gem "pickadate-rails"
 
 gem "rails_12factor", group: :production
 
@@ -24,5 +25,3 @@ group :development do
   gem "pry"
   gem "spring"
 end
-
-gem "rails_12factor", group: :production

@@ -1,19 +1,17 @@
 class Album < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :trip
-
   before_destroy :delete_album
 
   def self.with_imgur(options)
-    trip_id = options.delete(:trip_id)
-    user_id = options.delete(:user_id)
     album = Imgur::Album.create(options)
-    create(
-      id: album["id"],
-      link: album["link"],
-      trip_id: trip_id,
-      user_id: user_id
-    )
+    create(imgur_id: album["id"])
+  end
+
+  def link
+    "https://imgur.com/a/#{imgur_id}"
+  end
+
+  def add_images(image_ids)
+    Imgur::Album.add_images(imgur_id, image_ids)
   end
 
   private

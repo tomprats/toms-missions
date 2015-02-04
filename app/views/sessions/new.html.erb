@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-6">
     <h1>Sign Up</h1>
-    <%= form_for :user, url: users_path do |f| %>
+    <%= form_for @user do |f| %>
       <div class="form-group">
         <%= f.text_field :name, placeholder: "Name", class: "form-control" %>
       </div>

@@ -1,0 +1,23 @@
+<h1><%= @trip.name %></h1>
+<h4>
+  <span><%= link_to @user.name, user_path(@user.username) %></span>
+  <span> | <%= link_to "Imgur Album", @mission.album.link, target: :_blank %></span>
+  <span> | <%= link_to "Trip", trip_path(@mission.trip_id) %></span>
+  <% if current_user == @user %>
+    <span> | <%= link_to "Edit Images", mission_images_path(@user.username, @mission.trip_id) %></span>
+  <% end %>
+</h4>
+<div class="row">
+  <div class="col-md-8">
+    <div class="row">
+      <% @mission.images.each_with_index do |image, index| %>
+        <% if (index % 3).zero? && !index.zero? %>
+          </div><div class="row" style="margin-top: 30px;">
+        <% end %>
+        <div class="col-md-4">
+          <%= image_tag image.link, class: "img-responsive" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

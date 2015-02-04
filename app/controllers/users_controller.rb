@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :require_user, except: [:index, :show, :create]
+
   def index
     @users = User.all
   end
@@ -20,8 +22,13 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.create(user_params)
-    redirect_to :back, notice: "#{@user.name} was created"
+    @user = User.new(user_params)
+    if @user.save
+      session[:user_id] = @user.id
+      redirect_to root_path, notice: "Logged in"
+    else
+      render "sessions/new", notice: "Incorrect credentials"
+    end
   end
 
   def update
@@ -35,7 +42,7 @@ class UsersController < ApplicationController
   end
 
   def upload_profile_picture
-    current_user.create_profile_picture(params[:image])
+    current_user.update_profile_picture(params[:image])
     redirect_to :back, notice: "Profile picture was updated"
   end
 

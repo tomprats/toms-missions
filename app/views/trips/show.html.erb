@@ -1,0 +1,35 @@
+<h1><%= @trip.name %></h1>
+<h4>
+  <span><%= @trip.date_range %></span>
+  <span> | <%= link_to "Imgur Album", @trip.album.link, target: :_blank %></span>
+  <% if @trip.users.include?(current_user) %>
+    <span> | <%= link_to "Edit Missionaries", trip_users_path(@trip.id) %></span>
+    <span> | <%= link_to "Edit Images", mission_images_path(current_user.username, @trip.id) %></span>
+  <% end %>
+</h4>
+<div class="row">
+  <div class="col-md-8">
+    <div class="row">
+      <% @trip.images.each_with_index do |image, index| %>
+        <% if (index % 3).zero? && !index.zero? %>
+          </div><div class="row" style="margin-top: 30px;">
+        <% end %>
+        <div class="col-md-4">
+          <%= image_tag image.link, class: "img-responsive" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-4 border-left">
+    <div class="row">
+      <% @trip.users.each do |user| %>
+        <div class="col-md-6">
+          <%= link_to mission_path(username: user.username, trip_id: @trip.id) do %>
+            <div><%= image_tag user.image.try(:link), class: "img-responsive" %></div>
+            <div class="text-center"><%= user.name %></div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

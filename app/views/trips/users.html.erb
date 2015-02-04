@@ -1,0 +1,13 @@
+<h1><%= @trip.name %></h1>
+<%= form_for @trip, url: trip_users_path, method: :post do |f| %>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <% users = options_for_select(@users.collect { |user| [user.name, user.id] }, @trip.users.collect(&:id)) %>
+      <%= f.select :users, users, {}, class: "searchable", multiple: true %>
+      <%= link_to trip_path(@trip.id), class: "btn btn-default pull-left" do %>
+        <%= fa_icon("caret-left") %> back
+      <% end %>
+      <%= f.submit class: "btn btn-success pull-right" %>
+    </div>
+  </div>
+<% end %>

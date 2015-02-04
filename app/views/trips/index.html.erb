@@ -1,0 +1,10 @@
+<h1>Missions</h1>
+<% @trips.each do |trip| %>
+  <div>
+    <span><%= trip.name %> | </span>
+    <span><%= link_to "View", trip_path(trip.id) %></span>
+    <% if current_user && current_user.admin? %>
+      <span> | <%= link_to "Delete", trip_path(trip.id), method: :delete %></span>
+    <% end %>
+  </div>
+<% end %>

@@ -11,6 +11,8 @@
  * file per style scope.
  *
  *= require_tree .
+ *= require pickadate/default
+ *= require pickadate/default.date
  *= require_self
  */
 @import "bootstrap";
@@ -37,6 +39,10 @@ form {
   max-width: 300px;
   margin: auto;
   text-align: center;
+}
+
+.border-left {
+  border-left: 1px solid $green;
 }
 
 @media screen and (max-width: $grid-float-breakpoint-max) {

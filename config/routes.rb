@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   post :login, to: "sessions#create"
   delete :logout, to: "sessions#destroy"
 
-  get :users, to: "users#index"
-  post :users, to: "users#create"
+  get :missionaries, to: "users#index", as: :users
+  post :missionaries, to: "users#create"
 
   get :me, to: "users#show"
   put :me, to: "users#update"
@@ -16,4 +16,15 @@ Rails.application.routes.draw do
   get "m/:username", to: "users#show", as: :user
   put "m/:username", to: "users#update"
   get "m/:username/edit", to: "users#edit", as: :edit_user
+
+  resources :trips
+  get "trips/:id/users", to: "trips#users", as: :trip_users
+  post "trips/:id/users", to: "trips#update_users"
+
+  get "m/:username/missions", to: "missions#index", as: :missions
+  get "m/:username/m/:trip_id", to: "missions#show", as: :mission
+
+  get "m/:username/m/:trip_id/images", to: "missions#images", as: :mission_images
+  post "m/:username/m/:trip_id/images", to: "missions#add_images"
+  delete "m/:username/m/:trip_id/images", to: "missions#delete_images"
 end

@@ -17,14 +17,13 @@ ActiveRecord::Schema.define(version: 20140918233901) do
   enable_extension "plpgsql"
 
   create_table "albums", force: true do |t|
-    t.integer  "imgur_id"
-    t.string   "link"
+    t.string   "imgur_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "images", force: true do |t|
-    t.integer  "imgur_id"
+    t.string   "imgur_id"
     t.string   "link"
     t.integer  "user_id"
     t.integer  "trip_id"
