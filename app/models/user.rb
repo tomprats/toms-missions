@@ -4,10 +4,10 @@ class User < ActiveRecord::Base
   has_many :missions
   has_many :trips, through: :missions
 
-  has_secure_password validations: true
-
   validates_presence_of :name, :email, :username
   validates_uniqueness_of :email, :username
+
+  has_secure_password validations: true
 
   def has_password?
     !!password_digest

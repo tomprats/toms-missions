@@ -27,7 +27,8 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to root_path, notice: "Logged in"
     else
-      render "sessions/new", notice: "Incorrect credentials"
+      flash[:error] = "Profile could not be created (#{@user.errors.full_messages.join(", ")})"
+      render "sessions/new"
     end
   end
 
@@ -38,7 +39,11 @@ class UsersController < ApplicationController
       @user = current_user
     end
     @user.update(user_params)
-    redirect_to :back, notice: "Profile was updated"
+    if @user.errors.empty?
+      redirect_to :back, notice: "Profile was updated"
+    else
+      redirect_to :back, alert: "Profile could not be updated (#{@user.errors.full_messages.join(", ")})"
+    end
   end
 
   def upload_profile_picture
