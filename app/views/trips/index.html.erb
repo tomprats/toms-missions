@@ -1,10 +1,14 @@
 <h1>Missions</h1>
-<% @trips.each do |trip| %>
-  <div>
-    <span><%= trip.name %> | </span>
-    <span><%= link_to "View", trip_path(trip.id) %></span>
-    <% if current_user && current_user.admin? %>
-      <span> | <%= link_to "Delete", trip_path(trip.id), method: :delete %></span>
+<div class="row">
+  <% @trips.each_with_index do |trip, index| %>
+    <% if (index % 4).zero? && !index.zero? %>
+      </div><div class="row" style="margin-top: 30px;">
     <% end %>
-  </div>
-<% end %>
+    <div class="col-md-3">
+      <%= link_to trip_path(trip.id) do %>
+        <div><%= image_tag trip.images.first.try(:link), class: "img-responsive" %></div>
+        <div class="text-center"><%= trip.name %></div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
