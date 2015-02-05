@@ -7,8 +7,10 @@
     <span> | <%= link_to "Edit Images", mission_images_path(@user.username, @mission.trip_id) %></span>
   <% end %>
 </h4>
+<% @images = @mission.images.page(params[:page]) %>
+<div class="text-center"><%= paginate @images %></div>
 <div class="row">
-  <% @mission.images.each_with_index do |image, index| %>
+  <% @images.each_with_index do |image, index| %>
     <% if (index % 4).zero? && !index.zero? %>
       </div><div class="row" style="margin-top: 30px;">
     <% end %>
@@ -17,3 +19,4 @@
     </div>
   <% end %>
 </div>
+<div class="text-center"><%= paginate @images %></div>

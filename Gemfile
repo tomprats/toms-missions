@@ -15,6 +15,7 @@ gem "jquery-form-rails"
 gem "jquery-turbolinks"
 gem "turbolinks"
 gem "pickadate-rails"
+gem "kaminari"
 
 gem "rails_12factor", group: :production
 

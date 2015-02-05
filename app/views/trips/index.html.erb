@@ -1,4 +1,6 @@
 <h1>Missions</h1>
+<% @trips = @trips.page(params[:page]) %>
+<div class="text-center"><%= paginate @trips %></div>
 <div class="row">
   <% @trips.each_with_index do |trip, index| %>
     <% if (index % 4).zero? && !index.zero? %>
@@ -12,3 +14,4 @@
     </div>
   <% end %>
 </div>
+<div class="text-center"><%= paginate @trips %></div>
