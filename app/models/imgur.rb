@@ -8,6 +8,7 @@ module Imgur
       raise ImgurError if response.body["status"] >= 400
       response
     rescue
+      puts response.body
       refresh_token && (tries -= 1).zero? ? (raise ImgurError) : retry
     end
 
@@ -19,6 +20,7 @@ module Imgur
       raise ImgurError if response.body["status"] >= 400
       response
     rescue
+      puts response.body
       refresh_token && (tries -= 1).zero? ? (raise ImgurError) : retry
     end
 
@@ -30,6 +32,7 @@ module Imgur
       raise ImgurError if response.body["status"] >= 400
       response
     rescue
+      puts response.body
       refresh_token && (tries -= 1).zero? ? (raise ImgurError) : retry
     end
 
@@ -49,6 +52,7 @@ module Imgur
 
       response
     rescue
+      puts response.body
       raise ImgurError
     end
 
