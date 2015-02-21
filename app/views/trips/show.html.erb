@@ -26,10 +26,9 @@
   <div class="col-md-4 border-left">
     <div class="row">
       <% @trip.users.each do |user| %>
-        <div class="col-md-6">
+        <div class="col-md-12">
           <%= link_to mission_path(username: user.username, trip_id: @trip.id) do %>
-            <div><%= image_tag user.image.try(:link), class: "img-responsive" %></div>
-            <div class="text-center"><%= user.name %></div>
+            <%= "#{user.name} (#{Image.count(user_id: user.id, trip_id: @trip.id)})" %>
           <% end %>
         </div>
       <% end %>
