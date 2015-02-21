@@ -12,6 +12,11 @@
             <% end %>
             <div class="col-md-4">
               <%= image_tag image.link, class: "img-responsive" %>
+              <%= link_to "Remove", delete_mission_image_path(
+                username: current_user.username,
+                trip_id: @trip.id,
+                id: image.id
+              ), method: :delete %>
             </div>
           <% end %>
         </div>

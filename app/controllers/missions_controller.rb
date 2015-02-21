@@ -1,5 +1,5 @@
 class MissionsController < ApplicationController
-  before_action :verify_user!, only: [:images, :add_images, :delete_images]
+  before_action :verify_user!, only: [:images, :add_images, :delete_image]
 
   def index
     @user = User.find_by(username: params[:username])
@@ -35,7 +35,10 @@ class MissionsController < ApplicationController
       notice: "#{@mission.trip.name}'s images uploaded"
   end
 
-  def delete_images
+  def delete_image
+    @image = @mission.images.find_by(id: params[:id])
+    @image.destroy
+    redirect_to :back
   end
 
   private
