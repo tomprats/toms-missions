@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     end
     @user.update(user_params)
     if @user.errors.empty?
-      redirect_to :back, notice: "Profile was updated"
+      redirect_to user_path(username: @user.username), notice: "Profile was updated"
     else
       redirect_to :back, alert: "Profile could not be updated (#{@user.errors.full_messages.join(", ")})"
     end
