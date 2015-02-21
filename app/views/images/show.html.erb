@@ -1,0 +1,16 @@
+<% user = @image.user %>
+<% trip = @image.trip %>
+<% if user %>
+  <% content_for :meta_title do %><%= "#{user.name}'s Missions" %><% end %>
+<% end %>
+<% content_for :meta_description do %><%= trip.try(:name) %><% end %>
+<% content_for :meta_image do %><%= @image.link %><% end %>
+<h1>
+  <%= link_to(trip.name, trip_path(trip.id)) + " - " if trip %>
+  <%= link_to user.name, user_path(username: user.username) if user %>
+</h1>
+<div class="row text-center">
+  <div class="col-md-12">
+    <%= image_tag @image.link, class: "img-responsive" %>
+  </div>
+</div>

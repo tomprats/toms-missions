@@ -21,7 +21,9 @@
           </div><div class="row" style="margin-top: 30px;">
         <% end %>
         <div class="col-md-4">
-          <%= image_tag image.link, class: "img-responsive" %>
+          <%= link_to image_path image.id do %>
+            <%= image_tag image.link, class: "img-responsive" %>
+          <% end %>
         </div>
       <% end %>
     </div>

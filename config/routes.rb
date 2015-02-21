@@ -27,4 +27,6 @@ Rails.application.routes.draw do
   get "m/:username/m/:trip_id/images", to: "missions#images", as: :mission_images
   post "m/:username/m/:trip_id/images", to: "missions#add_images"
   delete "m/:username/m/:trip_id/images/:id", to: "missions#delete_image", as: :delete_mission_image
+
+  resources :images, only: :show
 end
