@@ -26,7 +26,7 @@
   <div class="col-md-6 text-center">
     <h1>Profile Image</h1>
     <%= image_tag @user.image.link, class: "profile-image" if @user.image %>
-    <%= form_for :image, url: upload_profile_picture_path, html: { multipart: true } do |f| %>
+    <%= form_for :image, url: upload_user_image_path(username: @user.username), html: { multipart: true } do |f| %>
       <div class="form-group">
         <%= file_field_tag :image, class: "form-control" %>
       </div>

@@ -46,8 +46,13 @@ class UsersController < ApplicationController
     end
   end
 
-  def upload_profile_picture
-    current_user.update_profile_picture(params[:image])
+  def upload_image
+    if current_user.admin? && params[:username]
+      @user = User.find_by(username: params[:username])
+    else
+      @user = current_user
+    end
+    @user.update_profile_picture(params[:image])
     redirect_to :back, notice: "Profile picture was updated"
   end
 

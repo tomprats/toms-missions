@@ -1,9 +1,13 @@
+<% content_for :meta_description do %><%= @trip.name %><% end %>
+<% content_for :meta_image do %><%= @trip.images.first.try(:link) %><% end %>
 <h1><%= @trip.name %></h1>
 <h4>
   <span><%= @trip.date_range %></span>
   <span> | <%= link_to "Imgur Album", @trip.album.link, target: :_blank %></span>
   <% if @trip.users.include?(current_user) %>
-    <span> | <%= link_to "Edit Missionaries", trip_users_path(@trip.id) %></span>
+    <% if current_user.admin? %>
+      <span> | <%= link_to "Edit Missionaries", trip_users_path(@trip.id) %></span>
+    <% end %>
     <span> | <%= link_to "Edit Images", mission_images_path(current_user.username, @trip.id) %></span>
   <% end %>
 </h4>
