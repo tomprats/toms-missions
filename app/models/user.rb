@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    admin
+    admin == "super"
   end
 
   def update_profile_picture(blob)
