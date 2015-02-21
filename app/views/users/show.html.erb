@@ -9,7 +9,7 @@
     <div><b>Bio:</b> <%= @user.bio.blank? ? "None" : @user.bio %></div>
     <% if current_user == @user %>
       <div class="btn-group">
-        <%= link_to "Add Trip", new_trip_path, class: "btn btn-primary" %>
+        <%= link_to "Add Trip", new_trip_path, class: "btn btn-primary" if current_user.admin? %>
         <%= link_to "Edit Profile", edit_me_path, class: "btn btn-primary" %>
       </div>
     <% end %>

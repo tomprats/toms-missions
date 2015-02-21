@@ -1,4 +1,6 @@
 class TripsController < ApplicationController
+  before_filter :require_admin, only: [:new, :create]
+
   def index
     @trips = Trip.all
   end

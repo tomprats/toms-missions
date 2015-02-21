@@ -45,6 +45,10 @@ form {
   border-left: 1px solid $green;
 }
 
+.border-right {
+  border-right: 1px solid $green;
+}
+
 @media screen and (max-width: $grid-float-breakpoint-max) {
   body { padding-top: 60px; }
   .layout-container { margin: 0; }
