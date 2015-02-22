@@ -1,6 +1,7 @@
 class Image < ActiveRecord::Base
   belongs_to :user
   belongs_to :trip
+  has_many :favorites, dependent: :destroy
 
   before_destroy :delete_image
 

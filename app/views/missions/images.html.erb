@@ -24,6 +24,9 @@
             <% end %>
             <div class="col-md-4">
               <%= image_tag image.link, class: "img-responsive" %>
+              <%= link_to "#", class: "favorite-image", data: { image_id: image.id } do %>
+                <%= fa_icon "2x heart#{"-o" unless current_user.favorites.exists?(image_id: image.id)}"%>
+              <% end if current_user %>
               <%= link_to "Remove", delete_mission_image_path(
                 username: current_user.username,
                 trip_id: @trip.id,

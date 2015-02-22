@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   has_many :images
   has_many :missions
   has_many :trips, through: :missions
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_images, through: :favorites, source: :image
 
   validates_presence_of :name, :email, :username
   validates_uniqueness_of :email, :username
