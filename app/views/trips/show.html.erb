@@ -12,7 +12,19 @@
   <% end %>
 </h4>
 <div class="row">
-  <div class="col-md-8 border-right">
+  <div class="col-md-4 col-md-push-8">
+    <h4>User's Images</h4>
+    <div class="row">
+      <% @trip.users.each do |user| %>
+        <div class="col-md-12">
+          <%= link_to mission_path(username: user.username, trip_id: @trip.id) do %>
+            <%= "#{user.name} (#{Image.where(user_id: user.id, trip_id: @trip.id).count})" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-8 col-md-pull-4 border-right">
     <% @images = @trip.images.page(params[:page]).per(24) %>
     <div class="text-center"><%= paginate @images %></div>
     <div class="row">
@@ -28,17 +40,5 @@
       <% end %>
     </div>
     <div class="text-center"><%= paginate @images %></div>
-  </div>
-  <div class="col-md-4">
-    <h4>User's Images</h4>
-    <div class="row">
-      <% @trip.users.each do |user| %>
-        <div class="col-md-12">
-          <%= link_to mission_path(username: user.username, trip_id: @trip.id) do %>
-            <%= "#{user.name} (#{Image.where(user_id: user.id, trip_id: @trip.id).count})" %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
   </div>
 </div>

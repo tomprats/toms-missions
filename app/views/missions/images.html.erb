@@ -1,9 +1,21 @@
 <h1><%= @trip.name %></h1>
 <%= form_for @mission, url: mission_images_path, method: :post, html: { multipart: true } do |f| %>
   <div class="row">
+    <div class="col-md-4 col-md-push-8<%= " col-md-offset-4" if @mission.images.empty? %>">
+      <div class="form-group">
+        <%= file_field_tag "images[]", accept: "image/png,image/gif,image/jpeg", multiple: true, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        Please upload in small batches of 10 or less to ensure your request won't timeout and break everything.
+      </div>
+      <%= link_to mission_path(current_user.username, @trip.id), class: "btn btn-default pull-left" do %>
+        <%= fa_icon("caret-left") %> back
+      <% end %>
+      <%= f.submit class: "btn btn-success pull-right" %>
+    </div>
     <% @images = @mission.images.page(params[:page]).per(24) %>
     <% unless @images.empty? %>
-      <div class="col-md-8">
+      <div class="col-md-8 col-md-pull-4">
         <%= paginate @images %>
         <div class="row">
           <% @images.each_with_index do |image, index| %>
@@ -23,17 +35,5 @@
         <%= paginate @images %>
       </div>
     <% end %>
-    <div class="col-md-4<%= " col-md-offset-4" if @mission.images.empty? %>">
-      <div class="form-group">
-        <%= file_field_tag "images[]", accept: "image/png,image/gif,image/jpeg", multiple: true, class: "form-control" %>
-      </div>
-      <div class="form-group">
-        Please upload in small batches of 10 or less to ensure your request won't timeout and break everything.
-      </div>
-      <%= link_to mission_path(current_user.username, @trip.id), class: "btn btn-default pull-left" do %>
-        <%= fa_icon("caret-left") %> back
-      <% end %>
-      <%= f.submit class: "btn btn-success pull-right" %>
-    </div>
   </div>
 <% end %>
