@@ -44,9 +44,11 @@ form {
 .border-left {
   border-left: 1px solid $green;
 }
-
 .border-right {
   border-right: 1px solid $green;
+}
+.margin-top-30 {
+  margin-top: 30px;
 }
 
 @media screen and (max-width: $grid-float-breakpoint-max) {
@@ -61,5 +63,13 @@ form {
       display: block;
       height: 50px;
     }
+  }
+
+  .border-left,
+  .border-right {
+    border: none;
+  }
+  .margin-top-30 {
+    margin-top: initial;
   }
 }

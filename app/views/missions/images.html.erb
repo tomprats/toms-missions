@@ -1,14 +1,14 @@
 <h1><%= @trip.name %></h1>
 <%= form_for @mission, url: mission_images_path, method: :post, html: { multipart: true } do |f| %>
   <div class="row">
-    <% @images = @mission.images.page(params[:page]) %>
+    <% @images = @mission.images.page(params[:page]).per(24) %>
     <% unless @images.empty? %>
       <div class="col-md-8">
         <%= paginate @images %>
         <div class="row">
           <% @images.each_with_index do |image, index| %>
             <% if (index % 3).zero? && !index.zero? %>
-              </div><div class="row" style="margin-top: 30px;">
+              </div><div class="row margin-top-30">
             <% end %>
             <div class="col-md-4">
               <%= image_tag image.link, class: "img-responsive" %>

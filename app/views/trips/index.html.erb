@@ -1,10 +1,10 @@
 <h1>Missions</h1>
-<% @trips = @trips.page(params[:page]) %>
+<% @trips = @trips.page(params[:page]).per(24) %>
 <div class="text-center"><%= paginate @trips %></div>
 <div class="row">
   <% @trips.each_with_index do |trip, index| %>
     <% if (index % 4).zero? && !index.zero? %>
-      </div><div class="row" style="margin-top: 30px;">
+      </div><div class="row margin-top-30">
     <% end %>
     <div class="col-md-3">
       <%= link_to trip_path(trip.id) do %>
