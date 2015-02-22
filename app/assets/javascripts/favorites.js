@@ -3,7 +3,7 @@ $(document).ready(function() {
     e.preventDefault();
     var heart = $(this);
     var imageID = heart.data("image-id");
-    $.post("/favorite/" + imageID, function(data) {
+    $.post("/f/" + imageID, function(data) {
       heart.children().toggleClass("fa-heart fa-heart-o");
     });
     return false;

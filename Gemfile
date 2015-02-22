@@ -1,8 +1,10 @@
 source "https://rubygems.org"
 
-gem "rails", "4.1.5"
+ruby "2.2.2"
+
+gem "rails"
 gem "pg"
-gem "unicorn"
+gem "thin"
 gem "bcrypt", "~> 3.1.7"
 gem "unirest"
 

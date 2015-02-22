@@ -11,32 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150222010420) do
+ActiveRecord::Schema.define(version: 20150809232830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "albums", force: true do |t|
-    t.string   "imgur_id"
+  create_table "albums", force: :cascade do |t|
+    t.string   "imgur_id",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "favorites", force: true do |t|
+  create_table "favorites", force: :cascade do |t|
     t.integer "user_id"
     t.integer "image_id"
   end
 
-  create_table "images", force: true do |t|
-    t.string   "imgur_id"
-    t.string   "link"
+  create_table "images", force: :cascade do |t|
+    t.string   "imgur_id",   limit: 255
+    t.string   "link",       limit: 255
     t.integer  "user_id"
     t.integer  "trip_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "missions", force: true do |t|
+  create_table "missions", force: :cascade do |t|
     t.integer "user_id"
     t.integer "trip_id"
     t.integer "album_id"
@@ -45,25 +45,26 @@ ActiveRecord::Schema.define(version: 20150222010420) do
   add_index "missions", ["trip_id", "user_id"], name: "index_missions_on_trip_id_and_user_id", using: :btree
   add_index "missions", ["user_id", "trip_id"], name: "index_missions_on_user_id_and_trip_id", using: :btree
 
-  create_table "trips", force: true do |t|
+  create_table "trips", force: :cascade do |t|
     t.integer  "album_id"
-    t.string   "country"
+    t.string   "country",     limit: 255
     t.date     "start_date"
     t.date     "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "description"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.integer  "album_id"
     t.integer  "image_id"
-    t.string   "password_digest"
-    t.string   "name"
-    t.string   "username"
-    t.string   "email"
-    t.string   "bio"
-    t.string   "token"
-    t.string   "admin"
+    t.string   "password_digest", limit: 255
+    t.string   "name",            limit: 255
+    t.string   "username",        limit: 255
+    t.string   "email",           limit: 255
+    t.string   "bio",             limit: 255
+    t.string   "token",           limit: 255
+    t.string   "admin",           limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -12,7 +12,7 @@ class FavoritesController < ApplicationController
   end
 
   def index
-    @user = User.find(params[:user_id])
+    @user = User.find_by(username: params[:username])
     @images = @user.favorite_images.page(params[:page]).per(24)
   end
 end

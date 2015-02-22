@@ -30,6 +30,6 @@ Rails.application.routes.draw do
 
   resources :images, only: :show
 
-  get "favorites/:user_id", to: "favorites#index", as: :favorites
-  post "favorite/:image_id", to: "favorites#toggle", as: :favorite
+  get "f/:username", to: "favorites#index", as: :favorites
+  post "f/:image_id", to: "favorites#toggle", as: :favorite
 end
