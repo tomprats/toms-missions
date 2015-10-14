@@ -1,11 +1,11 @@
 <% content_for :meta_title do %><%= "#{@user.name}'s Missions" %><% end %>
 <% content_for :meta_description do %><%= @user.bio %><% end %>
-<% content_for :meta_image do %><%= @user.image.try(:link) %><% end %>
+<% content_for :meta_image do %><%= @user.image.large %><% end %>
 <div class="row">
   <div class="col-sm-3">
     <%= link_to image_path @user.image.id do %>
       <%= image_tag @user.image.large, class: "img-responsive" %>
-    <% end if @user.image %>
+    <% end %>
   </div>
   <div class="col-sm-4">
     <h1 class="text-left"><%= @user.name %></h1>
@@ -26,12 +26,9 @@
     <h1 class="text-left">Trips</h1>
     <div class="row">
       <% @user.trips.each_with_index do |trip, index| %>
-        <% if (index % 3).zero? && !index.zero? %>
-          </div><div class="row" style="margin-top: 30px;">
-        <% end %>
         <div class="col-md-6">
           <%= link_to trip_path(trip.id) do %>
-            <div><%= image_tag trip.images.first.try(:link), class: "img-responsive" %></div>
+            <div><%= image_tag trip.cover.thumbnail, class: "img-responsive center-block" %></div>
             <div class="text-center"><%= trip.name %></div>
           <% end %>
         </div>

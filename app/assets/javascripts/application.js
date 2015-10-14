@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery.turbolinks
-//= require jquery-fileupload/basic
 //= require bootstrap
 //= require pickadate/picker
 //= require pickadate/picker.date

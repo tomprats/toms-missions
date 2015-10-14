@@ -10,6 +10,10 @@ class Mission < ActiveRecord::Base
     Image.where(user_id: user_id, trip_id: trip_id)
   end
 
+  def cover
+    images.first || Image.default
+  end
+
   private
   def create_album
     album = Album.with_imgur(title: "#{user.name} - #{trip.name}")

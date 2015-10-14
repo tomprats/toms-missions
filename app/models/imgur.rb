@@ -9,7 +9,8 @@ module Imgur
       response
     rescue
       puts response.body
-      refresh_token && (tries -= 1).zero? ? (raise ImgurError) : retry
+      error = response.body["data"]["error"]
+      refresh_token && (tries -= 1).zero? ? (raise ImgurError.new(error)) : retry
     end
 
     def self.api_post(url, params)
@@ -21,7 +22,8 @@ module Imgur
       response
     rescue
       puts response.body
-      refresh_token && (tries -= 1).zero? ? (raise ImgurError) : retry
+      error = response.body["data"]["error"]
+      refresh_token && (tries -= 1).zero? ? (raise ImgurError.new(error)) : retry
     end
 
     def self.api_delete(url)
@@ -33,7 +35,8 @@ module Imgur
       response
     rescue
       puts response.body
-      refresh_token && (tries -= 1).zero? ? (raise ImgurError) : retry
+      error = response.body["data"]["error"]
+      refresh_token && (tries -= 1).zero? ? (raise ImgurError.new(error)) : retry
     end
 
     def self.refresh_token
@@ -51,9 +54,6 @@ module Imgur
       ENV["IMGUR_TOKEN"] = response.body["access_token"]
 
       response
-    rescue
-      puts response.body
-      raise ImgurError
     end
 
     def self.token_expired?

@@ -71,10 +71,6 @@ GEM
       activesupport (>= 4.1.0)
     hike (1.2.3)
     i18n (0.7.0)
-    jquery-fileupload-rails (0.4.6)
-      actionpack (>= 3.1)
-      railties (>= 3.1)
-      sass (>= 3.2)
     jquery-form-rails (1.0.1)
       jquery-rails
     jquery-rails (4.0.5)
@@ -186,7 +182,6 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-sass
   font-awesome-rails
-  jquery-fileupload-rails
   jquery-form-rails
   jquery-rails
   jquery-turbolinks
