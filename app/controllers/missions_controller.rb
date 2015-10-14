@@ -31,8 +31,8 @@ class MissionsController < ApplicationController
     end
 
     @mission.trip.album.add_images(image_ids)
-    redirect_to mission_images_path(current_user.username, @mission.trip_id),
-      notice: "#{@mission.trip.name}'s images uploaded"
+
+    render json: { success: true }
   end
 
   def delete_image
