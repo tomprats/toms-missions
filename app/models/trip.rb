@@ -21,6 +21,10 @@ class Trip < ActiveRecord::Base
     "#{start_date.strftime("%m/%d/%Y")} to #{end_date.strftime("%m/%d/%Y")}"
   end
 
+  def cover
+    images.first || Image.default
+  end
+
   private
   def create_album
     album = Album.with_imgur(title: name)

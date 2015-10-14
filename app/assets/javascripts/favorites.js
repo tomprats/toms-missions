@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $(document).on("click", ".favorite-image", function(e) {
+  $(document).on("click", ".favorite-image, .favorite-link", function(e) {
     e.preventDefault();
     var heart = $(this);
     var imageID = heart.data("image-id");

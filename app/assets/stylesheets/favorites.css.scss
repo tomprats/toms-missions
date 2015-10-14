@@ -1,7 +1,10 @@
 .favorite-image {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 50%;
   padding: 10px 10px 20px 20px;
-  margin-right: 15px
+  margin-right: -80px;
+}
+.images-show .favorite-image {
+  margin-right: -320px;
 }

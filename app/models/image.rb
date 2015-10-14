@@ -17,6 +17,24 @@ class Image < ActiveRecord::Base
     )
   end
 
+  def self.default
+    OpenStruct.new(thumbnail: "logo-square-t.jpg")
+  end
+
+  def thumbnail
+    url "b"
+  end
+
+  def large
+    url "l"
+  end
+
+  def url(size)
+    array = link.split(".")
+    array[array.size - 2] << size
+    array.join(".")
+  end
+
   private
   def delete_image
     Imgur::Image.delete(self.imgur_id)

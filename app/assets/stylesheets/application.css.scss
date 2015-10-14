@@ -50,6 +50,12 @@ form {
 .margin-top-30 {
   margin-top: 30px;
 }
+.margin-auto {
+  margin: auto;
+}
+.inline-block {
+  display: inline-block;
+}
 
 @media screen and (max-width: $grid-float-breakpoint-max) {
   body { padding-top: 60px; }
@@ -68,8 +74,5 @@ form {
   .border-left,
   .border-right {
     border: none;
-  }
-  .margin-top-30 {
-    margin-top: initial;
   }
 }

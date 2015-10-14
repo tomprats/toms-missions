@@ -19,11 +19,8 @@
         <%= paginate @images %>
         <div class="row">
           <% @images.each_with_index do |image, index| %>
-            <% if (index % 3).zero? && !index.zero? %>
-              </div><div class="row margin-top-30">
-            <% end %>
-            <div class="col-md-4">
-              <%= image_tag image.link, class: "img-responsive" %>
+            <div class="col-md-4 col-xs-6 margin-top-30">
+              <%= image_tag image.thumbnail, class: "img-responsive center-block" %>
               <%= link_to "#", class: "favorite-image", data: { image_id: image.id } do %>
                 <%= fa_icon "2x heart#{"-o" unless current_user.favorites.exists?(image_id: image.id)}"%>
               <% end if current_user %>
