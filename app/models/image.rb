@@ -18,7 +18,7 @@ class Image < ActiveRecord::Base
   end
 
   def self.default
-    OpenStruct.new(thumbnail: "logo-square-t.jpg")
+    OpenStruct.new(thumbnail: "logo-square-t.jpg", destroy: false)
   end
 
   def thumbnail

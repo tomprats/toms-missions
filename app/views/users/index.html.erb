@@ -3,12 +3,9 @@
 <div class="text-center"><%= paginate @users %></div>
 <div class="row">
   <% @users.each_with_index do |user, index| %>
-    <% if (index % 4).zero? && !index.zero? %>
-      </div><div class="row" style="margin-top: 30px;">
-    <% end %>
-    <div class="col-md-3">
+    <div class="col-sm-3 col-xs-6 margin-top-30">
       <%= link_to user_path(user.username) do %>
-        <div><%= image_tag user.image.try(:link), class: "img-responsive" %></div>
+        <div><%= image_tag user.image.thumbnail, class: "img-responsive center-block" %></div>
         <div class="text-center"><%= user.name %></div>
       <% end %>
     </div>

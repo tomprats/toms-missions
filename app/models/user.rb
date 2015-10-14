@@ -23,6 +23,10 @@ class User < ActiveRecord::Base
     admin == "super"
   end
 
+  def image
+    image_id ? super : Image.default
+  end
+
   def update_profile_picture(blob)
     profile = Image.with_imgur(
       title: username,
@@ -30,7 +34,7 @@ class User < ActiveRecord::Base
       album_id: Imgur::Album.profile["id"],
       user_id: id
     )
-    image.destroy if image
+    image.destroy if image_id
     update(image_id: profile.id)
   end
 end
