@@ -4,7 +4,7 @@
 <div class="row">
   <% @trips.each_with_index do |trip, index| %>
     <div class="col-sm-3 col-xs-6 margin-top-30 text-center">
-      <%= link_to trip_path(trip.id) do %>
+      <%= link_to trip_path(trip.uid) do %>
         <div class="inline-block"><%= image_tag trip.cover.thumbnail, width: 160, height: 160, class: "img-responsive center-block" %></div>
         <div><%= trip.name %></div>
       <% end %>

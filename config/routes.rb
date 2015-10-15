@@ -17,16 +17,16 @@ Rails.application.routes.draw do
   get "m/:username/edit", to: "users#edit", as: :edit_user
   post "m/:username/image", to: "users#upload_image", as: :upload_user_image
 
-  resources :trips
-  get "trips/:id/users", to: "trips#users", as: :trip_users
-  post "trips/:id/users", to: "trips#update_users"
+  resources :trips, param: :uid
+  get "trips/:uid/users", to: "trips#users", as: :trip_users
+  post "trips/:uid/users", to: "trips#update_users"
 
   get "m/:username/missions", to: "missions#index", as: :missions
-  get "m/:username/m/:trip_id", to: "missions#show", as: :mission
+  get "m/:username/m/:trip_uid", to: "missions#show", as: :mission
 
-  get "m/:username/m/:trip_id/images", to: "missions#images", as: :mission_images
-  post "m/:username/m/:trip_id/images", to: "missions#add_images"
-  delete "m/:username/m/:trip_id/images/:id", to: "missions#delete_image", as: :delete_mission_image
+  get "m/:username/m/:trip_uid/images", to: "missions#images", as: :mission_images
+  post "m/:username/m/:trip_uid/images", to: "missions#add_images"
+  delete "m/:username/m/:trip_uid/images/:id", to: "missions#delete_image", as: :delete_mission_image
 
   resources :images, only: :show
 

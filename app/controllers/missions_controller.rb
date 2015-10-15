@@ -8,10 +8,10 @@ class MissionsController < ApplicationController
 
   def show
     @user = User.find_by(username: params[:username])
-    @trip = Trip.find_by(id: params[:trip_id])
-    @mission = @user.missions.find_by(trip_id: params[:trip_id])
+    @trip = Trip.find_by(uid: params[:trip_uid])
+    @mission = @user.missions.find_by(trip_id: @trip.id)
     unless @mission
-      @user.missions.create(trip_id: params[:trip_id])
+      @user.missions.create(trip_id: @trip.id)
     end
   end
 
@@ -45,7 +45,8 @@ class MissionsController < ApplicationController
 
   private
   def verify_user!
-    @mission = current_user.missions.find_by(trip_id: params[:trip_id])
+    @trip = Trip.find_by(uid: params[:trip_uid])
+    @mission = current_user.missions.find_by(trip_id: @trip.id)
     unless @mission && params[:username] == current_user.username
       return redirect_to root_path, notice: "Unauthorized Access"
     end

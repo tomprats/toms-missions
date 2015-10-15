@@ -6,7 +6,7 @@
 <% content_for :meta_description do %><%= trip.try(:name) %><% end %>
 <% content_for :meta_image do %><%= @image.large %><% end %>
 <h1>
-  <%= link_to(trip.name, trip_path(trip.id)) + " - " if trip %>
+  <%= link_to(trip.name, trip_path(trip)) + " - " if trip %>
   <%= link_to user.name, user_path(username: user.username) if user %>
   <% if current_user %>
     -

@@ -21,7 +21,7 @@
             <% end if current_user %>
             <%= link_to "Remove", delete_mission_image_path(
               username: current_user.username,
-              trip_id: @trip.id,
+              trip_uid: @trip.uid,
               id: image.id
             ), method: :delete %>
           </div>

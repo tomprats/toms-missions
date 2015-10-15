@@ -2,7 +2,7 @@
 <% content_for :meta_description do %><%= @user.bio %><% end %>
 <% content_for :meta_image do %><%= @user.image.large %><% end %>
 <div class="row">
-  <div class="col-sm-3">
+  <div class="col-sm-3 margin-top-30">
     <% if @user.image.id %>
       <%= link_to image_path @user.image.id do %>
         <%= image_tag @user.image.large, class: "img-responsive center-block" %>
@@ -28,10 +28,10 @@
   </div>
   <div class="col-sm-5">
     <h1 class="text-left">Trips</h1>
-    <div class="row">
+    <div class="row margin-top-n-30">
       <% @user.trips.each_with_index do |trip, index| %>
-        <div class="col-md-6">
-          <%= link_to trip_path(trip.id) do %>
+        <div class="col-md-6 margin-top-30">
+          <%= link_to trip_path(trip.uid) do %>
             <div><%= image_tag trip.cover.thumbnail, class: "img-responsive center-block" %></div>
             <div class="text-center"><%= trip.name %></div>
           <% end %>

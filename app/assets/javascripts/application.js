@@ -12,12 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require jquery.turbolinks
 //= require bootstrap
 //= require pickadate/picker
 //= require pickadate/picker.date
 //= require_tree .
+//= require turbolinks
 
 $(document).ready(function() {
   $(".navbar-collapse").on("show.bs.collapse", function() {
@@ -27,10 +27,10 @@ $(document).ready(function() {
   $(".navbar-collapse").on("hide.bs.collapse", function() {
     $(".navbar-toggle .fa").addClass("fa-plus").removeClass("fa-minus");
   });
+});
 
-  $(document).on("click", function() {
-    if($(".navbar-toggle .fa-minus").length) {
-      $(".navbar-collapse").collapse("hide");
-    }
-  });
+$(document).on("click", function() {
+  if($(".navbar-toggle .fa-minus").length) {
+    $(".navbar-collapse").collapse("hide");
+  }
 });

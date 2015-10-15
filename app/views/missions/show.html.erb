@@ -5,9 +5,9 @@
 <h4>
   <span><%= link_to @user.name, user_path(@user.username) %></span>
   <span> | <%= link_to "Imgur Album", @mission.album.link, target: :_blank %></span>
-  <span> | <%= link_to "Trip", trip_path(@mission.trip_id) %></span>
+  <span> | <%= link_to "Trip", trip_path(@mission.trip.uid) %></span>
   <% if current_user == @user %>
-    <span> | <%= link_to "Edit Images", mission_images_path(@user.username, @mission.trip_id) %></span>
+    <span> | <%= link_to "Edit Images", mission_images_path(@user.username, @mission.trip.uid) %></span>
   <% end %>
 </h4>
 <% @images = @mission.images.page(params[:page]).per(24) %>

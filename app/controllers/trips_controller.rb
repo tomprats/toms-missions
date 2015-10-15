@@ -10,15 +10,15 @@ class TripsController < ApplicationController
   end
 
   def show
-    @trip = Trip.find(params[:id])
+    @trip = Trip.find_by(uid: params[:uid])
   end
 
   def create
-    country = params[:trip][:country]
     start_date = convert_to_date(params[:trip][:start_date])
     end_date = convert_to_date(params[:trip][:end_date])
     @trip = Trip.new(
-      country: country,
+      uid: params[:trip][:uid],
+      country: params[:trip][:country],
       start_date: start_date,
       end_date: end_date,
       user_ids: [current_user.id]
@@ -32,14 +32,14 @@ class TripsController < ApplicationController
   end
 
   def users
-    @trip = Trip.find(params[:id])
+    @trip = Trip.find_by(uid: params[:uid])
     @users = User.all
   end
 
   def update_users
-    @trip = Trip.find(params[:id])
+    @trip = Trip.find_by(uid: params[:uid])
     @trip.update(user_ids: params[:trip][:users].select { |id| !id.blank? })
-    redirect_to trip_path(@trip.id), notice: "#{@trip.name}'s missionaries updated"
+    redirect_to trip_path(@trip), notice: "#{@trip.name}'s missionaries updated"
   end
 
   private
