@@ -3,6 +3,8 @@ class Image < ActiveRecord::Base
   belongs_to :trip
   has_many :favorites, dependent: :destroy
 
+  validates_presence_of :imgur_id, :link
+
   before_destroy :delete_image
 
   def self.with_imgur(options)

@@ -1,4 +1,6 @@
 class Album < ActiveRecord::Base
+  validates_presence_of :imgur_id
+
   before_destroy :delete_album
 
   def self.with_imgur(options)

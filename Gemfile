@@ -4,9 +4,10 @@ ruby "2.2.2"
 
 gem "rails"
 gem "pg"
+gem "redis"
 gem "thin"
 gem "bcrypt", "~> 3.1.7"
-gem "unirest"
+gem "typhoeus"
 
 gem "sass-rails", "~> 4.0.3"
 gem "uglifier", ">= 1.3.0"

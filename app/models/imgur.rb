@@ -4,10 +4,10 @@ module Imgur
       tries ||= 2
       refresh_token if token_expired?
       headers = { "Authorization" => "Bearer #{ENV["IMGUR_TOKEN"]}" }
-      response = Unirest.get(url, headers: headers)
-      raise ImgurError if response.body["status"] >= 400
+      response = Typhoeus.get(url, headers: headers)
+      raise ImgurError if response.response_code >= 400
       response
-    rescue
+    rescue ImgurError
       puts response.body
       error = response.body["data"]["error"]
       refresh_token && (tries -= 1).zero? ? (raise ImgurError.new(error)) : retry
@@ -17,12 +17,12 @@ module Imgur
       tries ||= 2
       refresh_token if token_expired?
       headers = { "Authorization" => "Bearer #{ENV["IMGUR_TOKEN"]}" }
-      response = Unirest.post(url, headers: headers, parameters: params)
-      raise ImgurError if response.body["status"] >= 400
+      response = Typhoeus.post(url, headers: headers, body: params)
+      raise ImgurError if response.response_code >= 400
       response
-    rescue
+    rescue ImgurError
       puts response.body
-      error = response.body["data"]["error"]
+      error = JSON.parse(response.body)["data"]["error"]
       refresh_token && (tries -= 1).zero? ? (raise ImgurError.new(error)) : retry
     end
 
@@ -30,30 +30,39 @@ module Imgur
       tries ||= 2
       refresh_token if token_expired?
       headers = { "Authorization" => "Bearer #{ENV["IMGUR_TOKEN"]}" }
-      response = Unirest.delete(url, headers: headers)
-      raise ImgurError if response.body["status"] >= 400
+      response = Typhoeus.delete(url, headers: headers)
+      raise ImgurError if response.response_code >= 400
       response
-    rescue
+    rescue ImgurError
       puts response.body
       error = response.body["data"]["error"]
       refresh_token && (tries -= 1).zero? ? (raise ImgurError.new(error)) : retry
     end
 
     def self.refresh_token
-      url = "https://api.imgur.com/oauth2/token"
-      params = {
-        refresh_token: ENV["IMGUR_REFRESH"],
-        client_id: ENV["IMGUR_ID"],
-        client_secret: ENV["IMGUR_SECRET"],
-        grant_type: :refresh_token
-      }
-      headers = { "Authorization" => "Client-ID #{ENV["IMGUR_ID"]}" }
-      response = Unirest.post(url, headers: headers, parameters: params)
+      token_from_redis = $redis.get("TOMSMISSIONS-IMGUR_TOKEN")
+      if ENV["IMGUR_TOKEN"] == token_from_redis || token_from_redis.blank?
+        url = "https://api.imgur.com/oauth2/token"
+        params = {
+          refresh_token: ENV["IMGUR_REFRESH"],
+          client_id: ENV["IMGUR_ID"],
+          client_secret: ENV["IMGUR_SECRET"],
+          grant_type: :refresh_token
+        }
+        headers = { "Authorization" => "Bearer #{ENV["IMGUR_ID"]}" }
+        response = Typhoeus.post(url, headers: headers, body: params)
+        body = JSON.parse(response.body)
 
-      ENV["IMGUR_TIMEOUT"] = calculate_timeout(response.body["expires_in"])
-      ENV["IMGUR_TOKEN"] = response.body["access_token"]
+        ENV["IMGUR_TIMEOUT"] = calculate_timeout(body["expires_in"])
+        ENV["IMGUR_TOKEN"] = body["access_token"]
+        $redis.set("TOMSMISSIONS-IMGUR_TIMEOUT", ENV["IMGUR_TIMEOUT"])
+        $redis.set("TOMSMISSIONS-IMGUR_TOKEN", ENV["IMGUR_TOKEN"])
+      else
+        ENV["IMGUR_TIMEOUT"] = $redis.get("TOMSMISSIONS-IMGUR_TIMEOUT")
+        ENV["IMGUR_TOKEN"] = $redis.get("TOMSMISSIONS-IMGUR_TOKEN")
+      end
 
-      response
+      true
     end
 
     def self.token_expired?
@@ -72,7 +81,7 @@ module Imgur
   class Album < Base
     def self.all
       url = "https://api.imgur.com/3/account/#{ENV["IMGUR_USERNAME"]}/albums"
-      api_get(url).body["data"]
+      JSON.parse(api_get(url).body)["data"]
     end
 
     def self.get(imgur_id)
@@ -96,7 +105,7 @@ module Imgur
         privacy: options[:privacy],
         cover: options[:cover]
       }
-      api_post(url, params).body["data"]
+      JSON.parse(api_post(url, params).body)["data"]
     end
 
     def self.add_images(imgur_id, image_ids)
@@ -104,12 +113,12 @@ module Imgur
       params = {
         ids: image_ids,
       }
-      api_post(url, params).body["data"]
+      JSON.parse(api_post(url, params).body)["data"]
     end
 
     def self.delete(imgur_id)
       url = "https://api.imgur.com/3/album/#{imgur_id}"
-      api_delete(url)
+      JSON.parse(api_delete(url).body)
     end
   end
 
@@ -117,18 +126,18 @@ module Imgur
     def self.create(options)
       url = "https://api.imgur.com/3/image"
       params = {
-        image: options[:image],
+        image: options[:image].try(:tempfile),
         album: options[:album_id],
         type: options[:type] || "file", # "file" || "base64" || "URL"
         title: options[:title],
         description: options[:description]
       }
-      api_post(url, params).body["data"]
+      JSON.parse(api_post(url, params).body)["data"]
     end
 
     def self.delete(imgur_id)
       url = "https://api.imgur.com/3/image/#{imgur_id}"
-      api_delete(url)
+      JSON.parse(api_delete(url).body)
     end
   end
 
