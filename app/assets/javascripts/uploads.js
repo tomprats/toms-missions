@@ -37,24 +37,5 @@ $(document).ready(function() {
     if(progress == 100 && file.previewElement) {
       $(file.previewElement).find("[data-dz-uploadprogress]").text("Processing");
     }
-  }).on("totaluploadprogress", function(progress, totalBytes, totalBytesSent) {
-    $("#total-progress").addClass("active");
-    $("#progress-bars").removeClass("hidden");
-    $("#total-progress").css("width", progress + "%");
-    $("#total-progress .progress-percent").text(Math.round(progress) + "%");
-    if(progress == 100) {
-      $("#total-progress .uploading").addClass("hidden");
-      $("#total-progress .processing").removeClass("hidden");
-      $("#total-progress .complete").addClass("hidden");
-    } else {
-      $("#total-progress .uploading").removeClass("hidden");
-      $("#total-progress .processing").addClass("hidden");
-      $("#total-progress .complete").addClass("hidden");
-    }
-  }).on("queuecomplete", function() {
-    $("#total-progress").removeClass("active");
-      $("#total-progress .uploading").addClass("hidden");
-      $("#total-progress .processing").addClass("hidden");
-      $("#total-progress .complete").removeClass("hidden");
   });
 });

@@ -6,21 +6,6 @@
     <div id="file-upload-dropzone">
       <span>Click here to upload your images!</span>
     </div>
-    <div id="progress-bars" class="margin-top-30 hidden">
-      <div class="progress">
-        <div id="total-progress" class="progress-bar progress-bar-success progress-bar-striped active">
-          <span class="uploading">
-            Uploading - <span class="progress-percent">0%</span>
-          </span>
-          <span class="processing hidden">
-            Processing
-          </span>
-          <span class="complete hidden">
-            Complete
-          </span>
-        </div>
-      </div>
-    </div>
     <div id="current-uploads"></div>
   </div>
   <% @images = @mission.images.page(params[:page]).per(24) %>
