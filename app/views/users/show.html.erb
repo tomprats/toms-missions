@@ -3,8 +3,12 @@
 <% content_for :meta_image do %><%= @user.image.large %><% end %>
 <div class="row">
   <div class="col-sm-3">
-    <%= link_to image_path @user.image.id do %>
-      <%= image_tag @user.image.large, class: "img-responsive" %>
+    <% if @user.image.id %>
+      <%= link_to image_path @user.image.id do %>
+        <%= image_tag @user.image.large, class: "img-responsive center-block" %>
+      <% end %>
+    <% else %>
+      <%= image_tag @user.image.large, class: "img-responsive center-block" %>
     <% end %>
   </div>
   <div class="col-sm-4">
