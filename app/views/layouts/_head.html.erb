@@ -6,7 +6,7 @@
 
   <% title = content_for(:meta_title) ? yield(:meta_title) : "Tom's Missions" %>
   <% description = content_for(:meta_description) ? yield(:meta_description) : "Let's make the world a better place" %>
-  <% image = content_for(:meta_image) ? yield(:meta_image) : asset_url("default-large.jpg") %>
+  <% image = content_for(:meta_image) ? yield(:meta_image) : "/logo.jpg" %>
   <meta property="og:type" content="website">
   <meta property="og:title" content="<%= title %>">
   <meta property="og:description" content="<%= description %>">
