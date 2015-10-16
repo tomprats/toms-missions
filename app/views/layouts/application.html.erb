@@ -2,6 +2,7 @@
 <html>
   <%= render "layouts/head" %>
   <body class="<%= "#{action_name} #{controller_name} #{controller_name}-#{action_name}" %>">
+    <%= render "layouts/analytics" %>
     <%= render "layouts/navbar" %>
     <div class="layout-container container-fluid">
       <%= render "layouts/message" %>
