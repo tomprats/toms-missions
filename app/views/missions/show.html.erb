@@ -15,7 +15,7 @@
 <div class="row">
   <% @images.each_with_index do |image, index| %>
     <div class="col-md-3 margin-top-30">
-      <%= link_to image_path image.id do %>
+      <%= link_to image_path(image.id), class: "overlay-link", data: { large: image.large } do %>
         <%= image_tag image.thumbnail, class: "img-responsive center-block" %>
       <% end %>
       <%= link_to "#", class: "favorite-image", data: { image_id: image.id } do %>
@@ -25,3 +25,5 @@
   <% end %>
 </div>
 <div class="text-center"><%= paginate @images %></div>
+
+<%= render partial: "layouts/partials/overlay" %>
