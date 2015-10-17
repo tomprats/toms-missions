@@ -30,10 +30,16 @@
     <h1 class="text-left">Trips</h1>
     <div class="row margin-top-n-30">
       <% @user.trips.each_with_index do |trip, index| %>
-        <div class="col-md-6 margin-top-30">
+        <div class="col-md-6 margin-top-30 text-center">
           <%= link_to trip_path(trip.uid) do %>
             <div><%= image_tag trip.cover.thumbnail, class: "img-responsive center-block" %></div>
-            <div class="text-center"><%= trip.name %></div>
+            <div><%= trip.name %></div>
+          <% end %>
+          <% if current_user == @user %>
+            <%= link_to mission_images_path(current_user.username, trip.uid) do %>
+              <span>Upload Images</span>
+              <i class="fa fa-upload"></i>
+            <% end %>
           <% end %>
         </div>
       <% end %>

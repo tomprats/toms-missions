@@ -10,7 +10,7 @@
   </div>
   <% @images = @mission.images.page(params[:page]).per(24) %>
   <% unless @images.empty? %>
-    <div class="col-md-8 col-md-pull-4">
+    <div class="col-md-8 col-md-pull-4 text-center">
       <%= paginate @images %>
       <div class="row">
         <% @images.each_with_index do |image, index| %>

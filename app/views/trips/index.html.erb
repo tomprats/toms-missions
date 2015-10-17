@@ -8,6 +8,12 @@
         <div class="inline-block"><%= image_tag trip.cover.thumbnail, width: 160, height: 160, class: "img-responsive center-block" %></div>
         <div><%= trip.name %></div>
       <% end %>
+      <% if trip.users.include?(current_user) %>
+        <%= link_to mission_images_path(current_user.username, trip.uid) do %>
+          <span>Upload Images</span>
+          <i class="fa fa-upload"></i>
+        <% end %>
+      <% end %>
     </div>
   <% end %>
 </div>
