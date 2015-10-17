@@ -6,7 +6,7 @@
     <div class="col-sm-3 col-xs-6 margin-top-30">
       <%= link_to user_path(user.username) do %>
         <div><%= image_tag user.image.thumbnail, class: "img-responsive center-block" %></div>
-        <div class="text-center"><%= user.name %></div>
+        <div class="text-center"><%= user.name %> (<%= user.images_count %>)</div>
       <% end %>
     </div>
   <% end %>

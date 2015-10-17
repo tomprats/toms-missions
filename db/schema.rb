@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151015221920) do
+ActiveRecord::Schema.define(version: 20151017020248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20151015221920) do
     t.string   "admin",           limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "images_count",                default: 0, null: false
   end
 
 end

@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   has_secure_password validations: true
 
   def self.default_scope
-    order(created_at: :asc)
+    order(images_count: :desc, name: :asc)
   end
 
   def has_password?
