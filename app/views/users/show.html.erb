@@ -20,6 +20,8 @@
       <% if current_user == @user %>
         <%= link_to "Add Trip", new_trip_path, class: "btn btn-primary" if current_user.admin? %>
         <%= link_to "Edit Profile", edit_me_path, class: "btn btn-primary" %>
+      <% elsif current_user.admin? %>
+        <%= link_to "Edit Profile", edit_user_path(@user.username), class: "btn btn-primary" %>
       <% end %>
       <% if @user.favorites.exists? %>
         <%= link_to "Favorites", favorites_path(@user.username), class: "btn btn-primary" %>
