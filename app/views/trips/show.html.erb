@@ -4,15 +4,20 @@
 <h4>
   <span><%= @trip.date_range %></span>
   <span> | <%= link_to "Imgur Album", @trip.album.link, target: :_blank %></span>
+  <% if current_user.admin? %>
+    <span> | <%= link_to "Edit", edit_trip_path(@trip.uid) %></span>
+    <span> | <%= link_to "Edit Missionaries", trip_users_path(@trip.uid) %></span>
+  <% end %>
   <% if @trip.users.include?(current_user) %>
-    <% if current_user.admin? %>
-      <span> | <%= link_to "Edit Missionaries", trip_users_path(@trip.uid) %></span>
-    <% end %>
-    <span> | <%= link_to "Edit Images", mission_images_path(current_user.username, @trip.uid) %></span>
+    <span> | <%= link_to "Upload Images", mission_images_path(current_user.username, @trip.uid) %></span>
   <% end %>
 </h4>
 <div class="row">
   <div class="col-sm-4 col-sm-push-8">
+    <% unless @trip.description.blank? %>
+      <h4>Description</h4>
+      <p><%= @trip.description %></p>
+    <% end %>
     <h4>User's Images</h4>
     <div class="row">
       <% @trip.users.each do |user| %>

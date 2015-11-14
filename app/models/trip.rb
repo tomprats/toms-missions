@@ -15,6 +15,10 @@ class Trip < ActiveRecord::Base
   before_create :set_uid
   after_create :create_album
 
+  def self.default_scope
+    order(start_date: :desc)
+  end
+
   def name
     "#{country} #{start_date.strftime("%B")} #{start_date.year}"
   end
@@ -29,6 +33,21 @@ class Trip < ActiveRecord::Base
 
   def to_param
     uid
+  end
+
+  def description
+    saved = super
+    saved.blank? ? default_description : saved
+  end
+
+  def default_description
+    tmp = "An exciting trip to #{country}!"
+    tmp += " A great time with #{random_users.collect(&:name).join(" and ")}!" if random_users.count >= 2
+    tmp
+  end
+
+  def random_users
+    users.sample(2)
   end
 
   private

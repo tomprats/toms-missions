@@ -2,7 +2,7 @@ class TripsController < ApplicationController
   before_filter :require_admin, except: [:index, :show]
 
   def index
-    @trips = Trip.all
+    @trips = Trip.all.includes(:images)
   end
 
   def new
@@ -14,18 +14,24 @@ class TripsController < ApplicationController
   end
 
   def create
-    start_date = convert_to_date(params[:trip][:start_date])
-    end_date = convert_to_date(params[:trip][:end_date])
-    @trip = Trip.new(
-      uid: params[:trip][:uid],
-      country: params[:trip][:country],
-      start_date: start_date,
-      end_date: end_date,
-      user_ids: [current_user.id]
-    )
+    @trip = Trip.new(trip_params.merge(user_ids: [current_user.id]))
 
     if @trip.save
       redirect_to root_path, notice: "Trip album can be found at #{@trip.album.link}"
+    else
+      render :new, alert: "Trip is invalid"
+    end
+  end
+
+  def edit
+    @trip = Trip.find_by(uid: params[:uid])
+  end
+
+  def update
+    @trip = Trip.find_by(uid: params[:uid])
+
+    if @trip.update(trip_params)
+      redirect_to root_path, notice: "Trip album updated"
     else
       render :new, alert: "Trip is invalid"
     end
@@ -45,5 +51,14 @@ class TripsController < ApplicationController
   private
   def convert_to_date(date)
     Date.strptime(date, "%m/%d/%Y")
+  end
+
+  def trip_params
+    params.require(:trip)
+      .permit(:uid, :country, :description)
+      .merge(
+        start_date: convert_to_date(params[:trip][:start_date]),
+        end_date: convert_to_date(params[:trip][:end_date])
+      )
   end
 end
