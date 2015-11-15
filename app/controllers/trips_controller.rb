@@ -3,6 +3,7 @@ class TripsController < ApplicationController
 
   def index
     @trips = Trip.all.includes(:images)
+    @users = User.all
   end
 
   def new

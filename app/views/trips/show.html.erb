@@ -4,7 +4,7 @@
 <h4>
   <span><%= @trip.date_range %></span>
   <span> | <%= link_to "Imgur Album", @trip.album.link, target: :_blank %></span>
-  <% if current_user.admin? %>
+  <% if current_user && current_user.admin? %>
     <span> | <%= link_to "Edit", edit_trip_path(@trip.uid) %></span>
     <span> | <%= link_to "Edit Missionaries", trip_users_path(@trip.uid) %></span>
   <% end %>

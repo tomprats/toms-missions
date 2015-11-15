@@ -1,0 +1,14 @@
+<% @users = @users.page(params[:page]).per(24) %>
+<div class="text-center"><%= paginate @users %></div>
+<div class="row">
+  <% @users.each_with_index do |user, index| %>
+    <% if index != 0 && (index%4).zero? %></div><div class="row"><% end %>
+    <div class="col-sm-3 col-xs-6 margin-top-30">
+      <%= link_to user_path(user.username) do %>
+        <div><%= image_tag user.image.thumbnail, class: "img-responsive center-block" %></div>
+        <div class="text-center"><%= user.name %> (<%= user.images_count %>)</div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+<div class="text-center"><%= paginate @users %></div>
