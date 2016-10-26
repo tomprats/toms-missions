@@ -12,7 +12,7 @@ class Trip < ActiveRecord::Base
 
   accepts_nested_attributes_for :users
 
-  before_create :set_uid
+  before_validation :set_uid, on: :create
   after_create :create_album
 
   def self.default_scope

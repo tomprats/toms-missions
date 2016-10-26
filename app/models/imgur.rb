@@ -8,7 +8,8 @@ module Imgur
       raise ImgurError if response.response_code >= 400
       response
     rescue ImgurError
-      puts response.body
+      Rails.logger.error "Error"
+      Rails.logger.error response.inspect
       error = response.body["data"]["error"]
       refresh_token && (tries -= 1).zero? ? (raise ImgurError.new(error)) : retry
     end
@@ -21,7 +22,8 @@ module Imgur
       raise ImgurError if response.response_code >= 400
       response
     rescue ImgurError
-      puts response.body
+      Rails.logger.error "Error"
+      Rails.logger.error response.inspect
       error = JSON.parse(response.body)["data"]["error"]
       refresh_token && (tries -= 1).zero? ? (raise ImgurError.new(error)) : retry
     end
@@ -34,7 +36,8 @@ module Imgur
       raise ImgurError if response.response_code >= 400
       response
     rescue ImgurError
-      puts response.body
+      Rails.logger.error "Error"
+      Rails.logger.error response.inspect
       error = response.body["data"]["error"]
       refresh_token && (tries -= 1).zero? ? (raise ImgurError.new(error)) : retry
     end
@@ -85,11 +88,11 @@ module Imgur
     end
 
     def self.get(imgur_id)
-      all.select { |a| a["id"] == imgur_id }.first
+      all.find { |a| a["id"] == imgur_id }
     end
 
     def self.find(title)
-      all.select { |a| a["title"] == title }.first
+      all.find { |a| a["title"] == title }
     end
 
     def self.profile
@@ -104,15 +107,13 @@ module Imgur
         description: options[:description],
         privacy: options[:privacy],
         cover: options[:cover]
-      }
+      }.compact
       JSON.parse(api_post(url, params).body)["data"]
     end
 
     def self.add_images(imgur_id, image_ids)
       url = "https://api.imgur.com/3/album/#{imgur_id}/add"
-      params = {
-        ids: image_ids,
-      }
+      params = { ids: image_ids }
       JSON.parse(api_post(url, params).body)["data"]
     end
 
@@ -131,7 +132,7 @@ module Imgur
         type: options[:type] || "file", # "file" || "base64" || "URL"
         title: options[:title],
         description: options[:description]
-      }
+      }.compact
       JSON.parse(api_post(url, params).body)["data"]
     end
 

@@ -1,0 +1,41 @@
+- content_for :meta_title, "#{@user.name}'s Missions"
+- content_for :meta_description, @user.bio
+- content_for :meta_image, @user.image.large
+.row
+  .col-sm-3.margin-top-30
+    - if @user.image.id
+      = link_to image_path @user.image.id do
+        = image_tag @user.image.large, class: "img-responsive center-block"
+    - else
+      = image_tag @user.image.large, class: "img-responsive center-block"
+  .col-sm-4
+    %h1.text-left= @user.name
+    %div
+      %b Username:
+      = @user.username
+    %div
+      %b Email:
+      = @user.email
+    %div
+      %b Bio:
+      = @user.bio.blank? ? "None" : @user.bio
+    .btn-group
+      - if current_user == @user
+        = link_to "Add Trip", new_trip_path, class: "btn btn-primary" if current_user.admin?
+        = link_to "Edit Profile", edit_me_path, class: "btn btn-primary"
+      - elsif current_user && current_user.admin?
+        = link_to "Edit Profile", edit_user_path(@user.username), class: "btn btn-primary"
+      - if @user.favorites.exists?
+        = link_to "Favorites", favorites_path(@user.username), class: "btn btn-primary"
+  .col-sm-5
+    %h1.text-left Trips
+    .row.margin-top-n-30
+      - @user.trips.each_with_index do |trip, index|
+        .col-md-6.margin-top-30.text-center
+          = link_to trip_path(trip.uid) do
+            %div= image_tag trip.cover.thumbnail, class: "img-responsive center-block"
+            %div= trip.name
+          - if current_user == @user
+            = link_to mission_images_path(current_user.username, trip.uid) do
+              %span Upload Images
+              %i.fa.fa-upload

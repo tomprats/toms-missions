@@ -1,0 +1,36 @@
+- content_for :meta_description, @trip.name
+- content_for :meta_image, @trip.cover.large
+%h1= @trip.name
+%h4
+  %span= @trip.date_range
+  %span | #{link_to "Imgur Album", @trip.album.link, target: :_blank}
+  - if current_user && current_user.admin?
+    %span | #{link_to "Edit", edit_trip_path(@trip.uid)}
+    %span | #{link_to "Edit Missionaries", trip_users_path(@trip.uid)}
+  - if @trip.users.include?(current_user)
+    %span> | #{link_to "Upload Images", mission_images_path(current_user.username, @trip.uid)}
+.row
+  .col-sm-4.col-sm-push-8
+    - unless @trip.description.blank?
+      %h4 Description
+      %p= @trip.description
+    %h4 User's Images
+    .row
+      - @trip.users.each do |user|
+        .col-sm-12
+          = link_to mission_path(username: user.username, trip_uid: @trip.uid) do
+            #{user.name} (#{Image.where(user_id: user.id, trip_id: @trip.id).count})
+  .col-sm-8.col-sm-pull-4.border-right
+    - @images = @trip.images.page(params[:page]).per(24)
+    .text-center= paginate @images
+    .row
+      - @images.each_with_index do |image, index|
+        .col-md-3.col-sm-4.col-xs-6.margin-top-30
+          = link_to image_path(image.id), class: "margin-auto overlay-link", data: { large: image.large } do
+            = image_tag image.thumbnail, class: "img-responsive center-block"
+          - if current_user
+            = link_to "#", class: "favorite-image", data: { image_id: image.id } do
+              = fa_icon "2x heart#{"-o" unless current_user.favorites.exists?(image_id: image.id)}"
+    .text-center= paginate @images
+
+= render "layouts/partials/overlay"

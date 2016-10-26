@@ -1,0 +1,14 @@
+- content_for :meta_title, "#{@user.name}'s Favorites"
+- content_for :meta_image, (@images.first || @user.image).large
+
+%h1 #{link_to @user.name, user_path(@user.username)}'s Favorites
+.text-center= paginate @images
+.row
+  - @images.each_with_index do |image, index|
+    .col-sm-2.col-xs-6.margin-top-30
+      = link_to image_path image.id do
+        = image_tag image.thumbnail, width: 160, height: 160, class: "img-responsive center-block"
+      - if current_user
+        = link_to "#", class: "favorite-image", data: { image_id: image.id } do
+          = fa_icon "2x heart#{"-o" unless current_user.favorites.exists?(image_id: image.id)}"
+.text-center= paginate @images

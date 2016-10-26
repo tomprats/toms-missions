@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
 
   has_secure_password validations: true
 
+  before_validation :format_email
+
   def self.default_scope
     order(images_count: :desc, name: :asc)
   end
@@ -36,5 +38,10 @@ class User < ActiveRecord::Base
     )
     image.destroy if image_id
     update(image_id: profile.id)
+  end
+
+  private
+  def format_email
+    self.email = email.strip.downcase
   end
 end

@@ -1,0 +1,17 @@
+.row
+  .col-md-6
+    %h1 Edit
+    = form_for @user, url: user_path(username: @user.username), method: :put do |f|
+      .form-group= f.text_field :name, placeholder: "Name", class: "form-control"
+      .form-group= f.text_field :username, placeholder: "Username", class: "form-control"
+      .form-group= f.text_field :email, placeholder: "Email", class: "form-control"
+      .form-group= f.text_field :bio, placeholder: "Bio", class: "form-control"
+      .form-group= f.password_field :password, placeholder: "Password", class: "form-control"
+      .form-group= f.password_field :password_confirmation, placeholder: "Password Confirmation", class: "form-control"
+      = f.submit "Save", class: "btn btn-primary"
+  .col-md-6.text-center
+    %h1 Profile Image
+    = image_tag @user.image.large, class: "profile-image"
+    = form_for :image, url: upload_user_image_path(username: @user.username), html: { multipart: true } do |f|
+      .form-group= file_field_tag :image, class: "form-control"
+      = f.submit "Save", class: "btn btn-primary"

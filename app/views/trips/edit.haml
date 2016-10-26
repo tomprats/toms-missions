@@ -1,0 +1,10 @@
+.row
+  .col-md-6.col-md-offset-3
+    %h1 Edit Trip
+    = form_for @trip do |f|
+      .form-group= f.text_field :uid, placeholder: "UID", class: "form-control"
+      .form-group= f.text_field :country, placeholder: "Country", class: "form-control"
+      .form-group= f.date_field :start_date, placeholder: "Start Date", value: @trip.start_date && @trip.start_date.strftime("%m/%d/%Y"), class: "form-control"
+      .form-group= f.date_field :end_date, placeholder: "End Date", value: @trip.end_date && @trip.end_date.strftime("%m/%d/%Y"), class: "form-control"
+      .form-group= f.text_field :description, placeholder: "Description", class: "form-control"
+      = f.submit "Save", class: "btn btn-primary"

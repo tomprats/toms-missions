@@ -9,8 +9,7 @@ class MissionsController < ApplicationController
   def show
     @user = User.find_by(username: params[:username])
     @trip = Trip.find_by(uid: params[:trip_uid])
-    @mission = @user.missions.find_by(trip_id: @trip.id)
-    unless @mission
+    unless @mission = @user.missions.find_by(trip_id: @trip.id)
       @user.missions.create(trip_id: @trip.id)
     end
   end

@@ -1,0 +1,23 @@
+- content_for :meta_title, "#{@user.name}'s Missions"
+- content_for :meta_description, @mission.trip.name
+- content_for :meta_image, (@mission.cover || @user.image).large
+%h1= @trip.name
+%h4
+  %span= link_to @user.name, user_path(@user.username)
+  %span | #{link_to "Imgur Album", @mission.album.link, target: :_blank}
+  %span | #{link_to "Trip", trip_path(@mission.trip.uid)}
+  <% if current_user == @user %>
+    %span | #{link_to "Edit Images", mission_images_path(@user.username, @mission.trip.uid)}
+- @images = @mission.images.page(params[:page]).per(24)
+.text-center= paginate @images
+.row
+  - @images.each_with_index do |image, index|
+    .col-md-3.margin-top-30
+      = link_to image_path(image.id), class: "overlay-link", data: { large: image.large } do
+        = image_tag image.thumbnail, class: "img-responsive center-block"
+      - if current_user
+        = link_to "#", class: "favorite-image", data: { image_id: image.id } do
+          = fa_icon "2x heart#{"-o" unless current_user.favorites.exists?(image_id: image.id)}"
+.text-center= paginate @images
+
+= render "layouts/partials/overlay"

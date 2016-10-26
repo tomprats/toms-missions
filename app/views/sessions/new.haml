@@ -1,0 +1,16 @@
+.row
+  .col-md-6
+    %h1 Sign Up
+    = form_for @user do |f|
+      .form-group= f.text_field :name, placeholder: "Name", class: "form-control"
+      .form-group= f.text_field :username, placeholder: "Username", class: "form-control"
+      .form-group= f.text_field :email, placeholder: "Email", class: "form-control"
+      .form-group= f.password_field :password, placeholder: "Password", class: "form-control"
+      .form-group= f.password_field :password_confirmation, placeholder: "Password Confirmation", class: "form-control"
+      = f.submit "Sign Up", class: "btn btn-primary"
+  .col-md-6
+    %h1 Sign In
+    = form_for :session do |f|
+      .form-group= f.text_field :email, placeholder: "Email", class: "form-control"
+      .form-group= f.password_field :password, placeholder: "Password", class: "form-control"
+      = f.submit "Sign In", class: "btn btn-primary"

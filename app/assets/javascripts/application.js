@@ -11,26 +11,20 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
 //= require jquery.turbolinks
+//= require jquery_ujs
 //= require bootstrap
 //= require pickadate/picker
 //= require pickadate/picker.date
+//
+//= require blueimp-gallery
+//= require dropzone
+//= require jquery.maskedinput
+//= require jquery.multi-select
+//= require jquery.quicksearch
+//= require pickafix
+//= require quicksearch-multiselect
+//
 //= require_tree .
 //= require turbolinks
-
-$(document).ready(function() {
-  $(".navbar-collapse").on("show.bs.collapse", function() {
-    $(".navbar-toggle .fa").addClass("fa-minus").removeClass("fa-plus");
-  });
-
-  $(".navbar-collapse").on("hide.bs.collapse", function() {
-    $(".navbar-toggle .fa").addClass("fa-plus").removeClass("fa-minus");
-  });
-});
-
-$(document).on("click", function() {
-  if($(".navbar-toggle .fa-minus").length) {
-    $(".navbar-collapse").collapse("hide");
-  }
-});
+//= require turbolinks-compatibility

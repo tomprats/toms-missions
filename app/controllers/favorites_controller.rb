@@ -2,8 +2,7 @@ class FavoritesController < ApplicationController
   before_action :require_user, except: :index
 
   def toggle
-    @fav = current_user.favorites.find_by(image_id: params[:image_id])
-    if @fav
+    if @fav = current_user.favorites.find_by(image_id: params[:image_id])
       @fav.destroy
     else
       current_user.favorites.create(image_id: params[:image_id])

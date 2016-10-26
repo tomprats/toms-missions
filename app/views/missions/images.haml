@@ -1,0 +1,22 @@
+%h1= @trip.name
+= form_for @mission, url: mission_images_path, method: :post, html: { multipart: true, id: "file-upload" }
+.row
+  .col-md-4.col-md-push-8
+    #file-upload-dropzone
+      %span Click here to upload your images!
+    #current-uploads
+  - @images = @mission.images.page(params[:page]).per(24)
+  - unless @images.empty?
+    .col-md-8.col-md-pull-4.text-center
+      = paginate @images
+      .row
+        - @images.each_with_index do |image, index|
+          .col-md-4.col-xs-6.margin-top-30.text-center
+            = image_tag image.thumbnail, class: "img-responsive center-block"
+            - if current_user
+              = link_to "#", class: "favorite-image", data: { image_id: image.id } do
+                = fa_icon "2x heart#{"-o" unless current_user.favorites.exists?(image_id: image.id)}"
+            = link_to "Remove", delete_mission_image_path(username: current_user.username, trip_uid: @trip.uid, id: image.id), method: :delete
+      = paginate @images
+
+= render "layouts/partials/dropzone_template"

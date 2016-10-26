@@ -1,0 +1,23 @@
+.row
+  %h1 Missions
+  .col-md-6
+    - @trips = @trips.page(params[:page]).per(24)
+    .text-center= paginate @trips
+    - index = 0
+    - @trips.each do |trip|
+      .row.text-center
+        .col-sm-12.margin-top-30.text-center
+          %h3= link_to trip.name, trip_path(trip.uid)
+          - if trip.users.include?(current_user)
+            .margin-bottom-10
+              = link_to mission_images_path(current_user.username, trip.uid) do
+                %span Upload Images
+                %i.fa.fa-upload
+          .row
+            .col-xs-6.text-right
+              = link_to trip_path(trip.uid) do
+                .inline-block= image_tag trip.cover.thumbnail, width: 160, height: 160, class: "img-responsive center-block"
+            .col-xs-6.text-left
+              %p= trip.description
+    .text-center= paginate @trips
+  .col-md-6= render "users/all"

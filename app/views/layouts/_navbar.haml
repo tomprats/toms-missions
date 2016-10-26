@@ -1,0 +1,16 @@
+%nav.navbar.navbar-fixed-top.navbar-inverse
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-collapse")
+        %span.sr-only Toggle navigation
+        %span.fa.fa-plus
+      %a.navbar-brand.visible-collapsed(href="http://www.tomprats.com")= image_tag "tp.png"
+    .collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        %li= link_to "Home", root_path
+      %ul.nav.navbar-nav.navbar-right
+        - if current_user
+          %li= link_to "Profile", me_path
+          %li= link_to "Logout", logout_path, method: :delete
+        - else
+          %li= link_to "Sign Up/In", login_path
