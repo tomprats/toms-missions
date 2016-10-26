@@ -25,9 +25,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:current_user_id] = @user.id
-      redirect_to root_path, notice: "Signed Up!"
+      redirect_to root_path, success: "Signed Up!"
     else
-      render "sessions/new", error: "Profile could not be created (#{@user.errors.full_messages.join(", ")})"
+      render "sessions/new", danger: "Profile could not be created (#{@user.errors.full_messages.join(", ")})"
     end
   end
 
@@ -39,9 +39,9 @@ class UsersController < ApplicationController
     end
     @user.update(user_params)
     if @user.errors.empty?
-      redirect_to user_path(username: @user.username), notice: "Profile was updated"
+      redirect_to user_path(username: @user.username), success: "Profile was updated"
     else
-      redirect_to :back, error: "Profile could not be updated (#{@user.errors.full_messages.join(", ")})"
+      redirect_to :back, danger: "Profile could not be updated (#{@user.errors.full_messages.join(", ")})"
     end
   end
 
@@ -52,7 +52,7 @@ class UsersController < ApplicationController
       @user = current_user
     end
     @user.update_profile_picture(params[:image])
-    redirect_to :back, notice: "Profile picture was updated"
+    redirect_to :back, success: "Profile picture was updated"
   end
 
   private

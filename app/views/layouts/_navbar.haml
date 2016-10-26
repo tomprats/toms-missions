@@ -4,7 +4,7 @@
       %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-collapse")
         %span.sr-only Toggle navigation
         %span.fa.fa-plus
-      %a.navbar-brand.visible-collapsed(href="http://www.tomprats.com")= image_tag "tp.png"
+      = link_to image_tag("tp.png"), root_path, class: "navbar-brand visible-collapsed"
     .collapse.navbar-collapse
       %ul.nav.navbar-nav
         %li= link_to "Home", root_path

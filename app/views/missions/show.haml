@@ -6,7 +6,7 @@
   %span= link_to @user.name, user_path(@user.username)
   %span | #{link_to "Imgur Album", @mission.album.link, target: :_blank}
   %span | #{link_to "Trip", trip_path(@mission.trip.uid)}
-  <% if current_user == @user %>
+  - if current_user == @user
     %span | #{link_to "Edit Images", mission_images_path(@user.username, @mission.trip.uid)}
 - @images = @mission.images.page(params[:page]).per(24)
 .text-center= paginate @images

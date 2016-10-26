@@ -1,6 +1,6 @@
 - user = @image.user
 - trip = @image.trip
-- if user %>
+- if user
   - content_for :meta_title, "#{user.name}'s Missions"
 - content_for :meta_description, trip.try(:name)
 - content_for :meta_image, @image.large

@@ -19,7 +19,6 @@
 //
 //= require blueimp-gallery
 //= require dropzone
-//= require jquery.maskedinput
 //= require jquery.multi-select
 //= require jquery.quicksearch
 //= require pickafix

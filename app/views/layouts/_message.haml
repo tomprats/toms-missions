@@ -1,5 +1,3 @@
-- bootstrap_class = { success: "alert-success", error: "alert-danger", alert: "alert-danger", notice: "alert-success" }
-- flash.each do |msg_type, message|
-  .alert(class="#{bootstrap_class[msg_type.to_sym]}")
-    = message
-    %button.close(data-dismiss="alert") x
+- flash.each do |key, value|
+  .alert.text-center(class="alert-#{key}")= value
+- flash.clear

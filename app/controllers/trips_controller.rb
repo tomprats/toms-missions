@@ -18,9 +18,9 @@ class TripsController < ApplicationController
     @trip = Trip.new(trip_params.merge(user_ids: [current_user.id]))
 
     if @trip.save
-      redirect_to root_path, notice: "Trip album can be found at #{@trip.album.link}"
+      redirect_to root_path, success: "Trip album can be found at #{@trip.album.link}"
     else
-      render :new, alert: "Trip is invalid"
+      render :new, danger: "Trip is invalid"
     end
   end
 
@@ -32,9 +32,9 @@ class TripsController < ApplicationController
     @trip = Trip.find_by(uid: params[:uid])
 
     if @trip.update(trip_params)
-      redirect_to root_path, notice: "Trip album updated"
+      redirect_to root_path, success: "Trip album updated"
     else
-      render :new, alert: "Trip is invalid"
+      render :new, danger: "Trip is invalid"
     end
   end
 
@@ -46,7 +46,7 @@ class TripsController < ApplicationController
   def update_users
     @trip = Trip.find_by(uid: params[:uid])
     @trip.update(user_ids: params[:trip][:users].select { |id| !id.blank? })
-    redirect_to trip_path(@trip), notice: "#{@trip.name}'s missionaries updated"
+    redirect_to trip_path(@trip), success: "#{@trip.name}'s missionaries updated"
   end
 
   private

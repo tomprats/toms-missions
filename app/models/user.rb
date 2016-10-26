@@ -8,10 +8,12 @@ class User < ActiveRecord::Base
 
   validates_presence_of :name, :email, :username
   validates_uniqueness_of :email, :username
+  validates_format_of :email, with: /@/
+  validates_format_of :username, with: /[-a-z0-9]+/, message: "can only contain letters, numbers, and dashes"
 
   has_secure_password validations: true
 
-  before_validation :format_email
+  before_validation :format
   after_create :notify_admin
 
   scope :admin, -> { where(admin: "super") }
@@ -48,8 +50,9 @@ class User < ActiveRecord::Base
   end
 
   private
-  def format_email
-    self.email = email.strip.downcase
+  def format
+    self.username = username.strip.downcase if username
+    self.email = email.strip.downcase if email
   end
 
   def notify_admin

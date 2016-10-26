@@ -47,7 +47,7 @@ class MissionsController < ApplicationController
     @trip = Trip.find_by(uid: params[:trip_uid])
     @mission = current_user.missions.find_by(trip_id: @trip.id)
     unless @mission && params[:username] == current_user.username
-      return redirect_to root_path, notice: "Unauthorized Access"
+      return redirect_to root_path, danger: "Unauthorized Access"
     end
   end
 end
