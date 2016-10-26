@@ -12,6 +12,9 @@ class User < ActiveRecord::Base
   has_secure_password validations: true
 
   before_validation :format_email
+  after_create :notify_admin
+
+  scope :admin, -> { where(admin: "super") }
 
   def self.default_scope
     order(images_count: :desc, name: :asc)
@@ -40,8 +43,16 @@ class User < ActiveRecord::Base
     update(image_id: profile.id)
   end
 
+  def to_param
+    username
+  end
+
   private
   def format_email
     self.email = email.strip.downcase
+  end
+
+  def notify_admin
+    User.admin.each { |admin| AdminMailer.new_user(admin, self).deliver_now }
   end
 end
