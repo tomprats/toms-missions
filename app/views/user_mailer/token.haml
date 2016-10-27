@@ -1,0 +1,17 @@
+%div(style="text-align: center;")
+  %p Dear #{@user.name},
+  %p Looks like you forgot something...
+  = image_tag "gifs/laughing.gif"
+  = image_tag "gifs/sneer.gif"
+  %p Sounds like a rough day
+  = image_tag "gifs/woods.gif"
+  = image_tag "gifs/basketball.gif"
+  %p You'll do better next time
+  = image_tag "gifs/wind.gif"
+  %p
+    You can log back in
+    = link_to "here!", token_url(@user.token)
+  %p
+    Thanks,
+    %br
+    Tomify

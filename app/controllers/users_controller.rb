@@ -37,11 +37,10 @@ class UsersController < ApplicationController
     else
       @user = current_user
     end
-    @user.update(user_params)
-    if @user.errors.empty?
+    if @user.update(user_params)
       redirect_to user_path(username: @user.username), success: "Profile was updated"
     else
-      redirect_to :back, danger: "Profile could not be updated (#{@user.errors.full_messages.join(", ")})"
+      redirect_back fallback_location: root_path, danger: "Profile could not be updated (#{@user.errors.full_messages.join(", ")})"
     end
   end
 
@@ -52,7 +51,7 @@ class UsersController < ApplicationController
       @user = current_user
     end
     @user.update_profile_picture(params[:image])
-    redirect_to :back, success: "Profile picture was updated"
+    redirect_back fallback_location: root_path, success: "Profile picture was updated"
   end
 
   private

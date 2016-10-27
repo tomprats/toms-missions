@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   def new
     @user = User.new
-    redirect_to root_path, warning: "You are already signed in" if current_user
+    redirect_to root_path, warning: "You are already logged in" if current_user
   end
 
   def create
@@ -10,8 +10,7 @@ class SessionsController < ApplicationController
       session[:current_user_id] = @user.id
       redirect_to root_path, success: "Logged in"
     else
-      flash[:error] = "Incorrect credentials"
-      render :new
+      render :new, danger: "Incorrect credentials"
     end
   end
 

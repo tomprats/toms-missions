@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get :login, to: "sessions#new"
   post :login, to: "sessions#create"
   delete :logout, to: "sessions#destroy"
+  resources :tokens, only: [:create, :show], param: :uid
 
   get :missionaries, to: "users#index", as: :users
   post :missionaries, to: "users#create"

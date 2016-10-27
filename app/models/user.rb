@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   belongs_to :image, dependent: :destroy
+  has_many :tokens
   has_many :images
   has_many :missions
   has_many :trips, through: :missions
@@ -28,6 +29,10 @@ class User < ActiveRecord::Base
 
   def admin?
     admin == "super"
+  end
+
+  def token
+    tokens.first_or_create
   end
 
   def image

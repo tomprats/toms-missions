@@ -11,6 +11,10 @@
   .col-md-6
     %h1 Sign In
     = form_for :session do |f|
-      .form-group= f.text_field :email, placeholder: "Email", class: "form-control"
+      .form-group= f.email_field :email, placeholder: "Email", class: "form-control"
       .form-group= f.password_field :password, placeholder: "Password", class: "form-control"
       = f.submit "Sign In", class: "btn btn-primary"
+    %h1 Forgot Password?
+    = form_for :password, url: tokens_path do |f|
+      .form-group= email_field_tag :email, nil, placeholder: "Email", class: "form-control"
+      = f.submit "Reset", class: "btn btn-primary"

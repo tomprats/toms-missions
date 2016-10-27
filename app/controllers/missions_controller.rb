@@ -39,7 +39,7 @@ class MissionsController < ApplicationController
   def delete_image
     @image = @mission.images.find_by(id: params[:id])
     @image.destroy
-    redirect_to :back
+    redirect_back fallback_location: root_path
   end
 
   private

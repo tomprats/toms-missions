@@ -40,7 +40,7 @@ class TripsController < ApplicationController
 
   def users
     @trip = Trip.find_by(uid: params[:uid])
-    @users = User.all
+    @users = User.reorder(:name)
   end
 
   def update_users

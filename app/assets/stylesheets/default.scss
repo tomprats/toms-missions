@@ -1,7 +1,10 @@
 @import "variables";
 
 body { padding-top: 60px; }
-.layout-container { margin: 20px; }
+.layout-container {
+  margin: 0;
+  padding-top: 15px;
+}
 
 .footer-link {
   position: fixed;
@@ -46,7 +49,6 @@ form {
 
 @media screen and (max-width: $grid-float-breakpoint-max) {
   body { padding-top: 60px; }
-  .layout-container { margin: 0; }
   .footer-link,
   .love-link {
     position: static;

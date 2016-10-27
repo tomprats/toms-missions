@@ -1,6 +1,6 @@
 %p Dear #{@admin.name},
 %p #{@user.name} has recently registered for Tom's Missions.
-%p= link_to @user_url, @user_url
+%p= link_to user_url(@user.username), user_url(@user.username)
 %p
   Thanks,
   %br
