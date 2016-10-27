@@ -37,5 +37,5 @@ Rails.application.configure do
 
   config.action_mailer.asset_host = "http://localhost:3000"
   config.action_mailer.default_url_options = { host: "localhost:3000" }
-  config.action_mailer.preview_path = "#{Rails.root}/app/mailers/previews"
+  config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
 end

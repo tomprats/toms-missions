@@ -1,5 +1,5 @@
 %h1= @trip.name
-= form_for @mission, url: mission_images_path, method: :post, html: { multipart: true, id: "file-upload" }
+= form_tag mission_images_path(@mission.user.username, @mission.trip.uid), method: :post, multipart: true, id: "file-upload"
 .row
   .col-md-4.col-md-push-8
     #file-upload-dropzone
