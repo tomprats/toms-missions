@@ -1,6 +1,6 @@
 class TokensController < ApplicationController
   def create
-    if user = User.find_by(email: params[:email])
+    if user = User.find_by(email: params[:email].strip.downcase)
       UserMailer.token(user).deliver_now
       redirect_back fallback_location: login_path, success: "Email Sent!"
     else
