@@ -1,0 +1,5 @@
+= form_for @resource do |f|
+  .form-group= f.collection_select :trip_id, Trip.all, :id, :name, {}, { class: "form-control" }
+  .form-group= f.text_field :text, placeholder: "Text", class: "form-control"
+  .form-group= f.url_field :url, placeholder: "URL", class: "form-control"
+  = f.submit "Save", class: "btn btn-primary"

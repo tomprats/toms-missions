@@ -21,12 +21,14 @@
     - unless @trip.description.blank?
       %h4 Description
       %p= @trip.description
+    - unless @trip.resources.empty?
+      %h4 Resources
+      - @trip.resources.each do |resource|
+        = link_to resource.text, resource.url, class: "btn btn-primary btn-block", target: :_blank
     %h4 User's Images
-    .row
-      - @trip.users.each do |user|
-        .col-sm-12
-          = link_to mission_path(username: user.username, trip_uid: @trip.uid), class: "btn btn-success btn-block" do
-            #{user.name} (#{Image.where(user_id: user.id, trip_id: @trip.id).count})
+    - @trip.users.each do |user|
+      = link_to mission_path(username: user.username, trip_uid: @trip.uid), class: "btn btn-success btn-block" do
+        #{user.name} (#{Image.where(user_id: user.id, trip_id: @trip.id).count})
   .col-sm-8.col-sm-pull-4.border-right
     - @images = @trip.images.page(params[:page]).per(24)
     .text-center= paginate @images

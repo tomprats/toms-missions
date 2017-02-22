@@ -1,0 +1,7 @@
+.row.text-center
+  %h1 Resources
+  = link_to "New Resource", new_resource_path, class: "btn btn-primary"
+  - @resources.each do |resource|
+    %h3.text-center
+      = link_to resource.text, resource.url, target: :_blank
+      = link_to fa_icon(:edit), edit_resource_path(resource)

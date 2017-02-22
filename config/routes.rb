@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   delete "m/:username/m/:trip_uid/images/:id", to: "missions#delete_image", as: :delete_mission_image
 
   resources :images, only: :show
+  resources :resources
 
   get "f/:username", to: "favorites#index", as: :favorites
   post "f/:image_id", to: "favorites#toggle", as: :favorite

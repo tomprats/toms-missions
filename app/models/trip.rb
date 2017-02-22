@@ -2,6 +2,7 @@ class Trip < ActiveRecord::Base
   has_many :missions
   has_many :users, through: :missions
   has_many :images
+  has_many :resources
 
   belongs_to :album, dependent: :destroy
   has_many :albums, through: :missions
@@ -10,7 +11,7 @@ class Trip < ActiveRecord::Base
   validates_uniqueness_of :uid
   validates_uniqueness_of :country, scope: [:start_date, :end_date]
 
-  accepts_nested_attributes_for :users
+  accepts_nested_attributes_for :users, :resources
 
   before_validation :set_uid, on: :create
   after_create :create_album
