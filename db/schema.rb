@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20161027022424) do
   enable_extension "plpgsql"
 
   create_table "albums", force: :cascade do |t|
-    t.string   "imgur_id",   limit: 255
+    t.string   "imgur_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 20161027022424) do
   end
 
   create_table "images", force: :cascade do |t|
-    t.string   "imgur_id",   limit: 255
-    t.string   "link",       limit: 255
+    t.string   "imgur_id"
+    t.string   "link"
     t.integer  "user_id"
     t.integer  "trip_id"
     t.datetime "created_at"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20161027022424) do
 
   create_table "trips", force: :cascade do |t|
     t.integer  "album_id"
-    t.string   "country",     limit: 255
+    t.string   "country"
     t.date     "start_date"
     t.date     "end_date"
     t.datetime "created_at"
@@ -66,16 +66,16 @@ ActiveRecord::Schema.define(version: 20161027022424) do
   create_table "users", force: :cascade do |t|
     t.integer  "album_id"
     t.integer  "image_id"
-    t.string   "password_digest", limit: 255
-    t.string   "name",            limit: 255
-    t.string   "username",        limit: 255
-    t.string   "email",           limit: 255
-    t.string   "bio",             limit: 255
-    t.string   "token",           limit: 255
-    t.string   "admin",           limit: 255
+    t.string   "password_digest"
+    t.string   "name"
+    t.string   "username"
+    t.string   "email"
+    t.string   "bio"
+    t.string   "token"
+    t.string   "admin"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "images_count",                default: 0, null: false
+    t.integer  "images_count",    default: 0, null: false
   end
 
 end

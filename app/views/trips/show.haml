@@ -1,15 +1,22 @@
 - content_for :meta_description, @trip.name
 - content_for :meta_image, @trip.cover.large
 %h1= @trip.name
-%h4
-  %span= @trip.date_range
-  %span | #{link_to "Imgur Album", @trip.album.link, target: :_blank}
+%h4= @trip.date_range
+.btn-group.btn-group-justified.hidden-xs
+  = link_to "Imgur Album", @trip.album.link, class: "btn btn-success", target: :_blank
   - if current_user && current_user.admin?
-    %span | #{link_to "Edit", edit_trip_path(@trip.uid)}
-    %span | #{link_to "Edit Missionaries", trip_users_path(@trip.uid)}
+    = link_to "Edit", edit_trip_path(@trip.uid), class: "btn btn-success"
+    = link_to "Edit Missionaries", trip_users_path(@trip.uid), class: "btn btn-success"
   - if @trip.users.include?(current_user)
-    %span> | #{link_to "Upload Images", mission_images_path(current_user.username, @trip.uid)}
-.row
+    = link_to "Upload Images", mission_images_path(current_user.username, @trip.uid), class: "btn btn-success"
+.visible-xs
+  = link_to "Imgur Album", @trip.album.link, class: "btn btn-success btn-block", target: :_blank
+  - if current_user && current_user.admin?
+    = link_to "Edit", edit_trip_path(@trip.uid), class: "btn btn-success btn-block"
+    = link_to "Edit Missionaries", trip_users_path(@trip.uid), class: "btn btn-success btn-block"
+  - if @trip.users.include?(current_user)
+    = link_to "Upload", mission_images_path(current_user.username, @trip.uid), class: "btn btn-success btn-block"
+.row.margin-top-30
   .col-sm-4.col-sm-push-8
     - unless @trip.description.blank?
       %h4 Description
@@ -18,7 +25,7 @@
     .row
       - @trip.users.each do |user|
         .col-sm-12
-          = link_to mission_path(username: user.username, trip_uid: @trip.uid) do
+          = link_to mission_path(username: user.username, trip_uid: @trip.uid), class: "btn btn-success btn-block" do
             #{user.name} (#{Image.where(user_id: user.id, trip_id: @trip.id).count})
   .col-sm-8.col-sm-pull-4.border-right
     - @images = @trip.images.page(params[:page]).per(24)

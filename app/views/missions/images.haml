@@ -1,6 +1,16 @@
 %h1= @trip.name
+.btn-group.btn-group-justified.hidden-xs
+  = link_to current_user.name, user_path(current_user.username), class: "btn btn-success"
+  = link_to "Imgur Album", @mission.album.link, class: "btn btn-success", target: :_blank
+  = link_to "Trip", trip_path(@mission.trip.uid), class: "btn btn-success"
+  = link_to "Images", mission_path(username: current_user.username, trip_uid: @mission.trip.uid), class: "btn btn-success"
+.visible-xs
+  = link_to current_user.name, user_path(current_user.username), class: "btn btn-success btn-block"
+  = link_to "Imgur Album", @mission.album.link, class: "btn btn-success btn-block", target: :_blank
+  = link_to "Trip", trip_path(@mission.trip.uid), class: "btn btn-success btn-block"
+  = link_to "Upload", mission_images_path(current_user.username, @mission.trip.uid), class: "btn btn-success btn-block"
 = form_tag mission_images_path(@mission.user.username, @mission.trip.uid), method: :post, multipart: true, id: "file-upload"
-.row
+.row.margin-top-30
   .col-md-4.col-md-push-8
     #file-upload-dropzone
       %span Click here to upload your images!
@@ -12,7 +22,8 @@
       .row
         - @images.each_with_index do |image, index|
           .col-md-4.col-xs-6.margin-top-30.text-center
-            = image_tag image.thumbnail, class: "img-responsive center-block"
+            = link_to image_path(image.id), class: "margin-auto overlay-link", data: { large: image.large } do
+              = image_tag image.thumbnail, class: "img-responsive center-block"
             - if current_user
               = link_to "#", class: "favorite-image", data: { image_id: image.id } do
                 = fa_icon "2x heart#{"-o" unless current_user.favorites.exists?(image_id: image.id)}"
@@ -20,3 +31,4 @@
       = paginate @images
 
 = render "layouts/partials/dropzone_template"
+= render "layouts/partials/overlay"

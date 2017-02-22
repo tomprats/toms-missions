@@ -2,15 +2,21 @@
 - content_for :meta_description, @mission.trip.name
 - content_for :meta_image, (@mission.cover || @user.image).large
 %h1= @trip.name
-%h4
-  %span= link_to @user.name, user_path(@user.username)
-  %span | #{link_to "Imgur Album", @mission.album.link, target: :_blank}
-  %span | #{link_to "Trip", trip_path(@mission.trip.uid)}
+.btn-group.btn-group-justified.hidden-xs
+  = link_to @user.name, user_path(@user.username), class: "btn btn-success"
+  = link_to "Imgur Album", @mission.album.link, class: "btn btn-success", target: :_blank
+  = link_to "Trip", trip_path(@mission.trip.uid), class: "btn btn-success"
   - if current_user == @user
-    %span | #{link_to "Edit Images", mission_images_path(@user.username, @mission.trip.uid)}
+    = link_to "Upload", mission_images_path(@user.username, @mission.trip.uid), class: "btn btn-success"
+.visible-xs
+  = link_to @user.name, user_path(@user.username), class: "btn btn-success btn-block"
+  = link_to "Imgur Album", @mission.album.link, class: "btn btn-success btn-block", target: :_blank
+  = link_to "Trip", trip_path(@mission.trip.uid), class: "btn btn-success btn-block"
+  - if current_user == @user
+    = link_to "Upload", mission_images_path(@user.username, @mission.trip.uid), class: "btn btn-success btn-block"
 - @images = @mission.images.page(params[:page]).per(24)
 .text-center= paginate @images
-.row
+.row.margin-top-30
   - @images.each_with_index do |image, index|
     .col-md-3.margin-top-30
       = link_to image_path(image.id), class: "overlay-link", data: { large: image.large } do

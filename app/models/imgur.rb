@@ -8,8 +8,6 @@ module Imgur
       raise ImgurError if response.response_code >= 400
       response
     rescue ImgurError
-      Rails.logger.error "Error"
-      Rails.logger.error response.inspect
       error = response.body["data"]["error"]
       refresh_token && (tries -= 1).zero? ? (raise ImgurError.new(error)) : retry
     end
@@ -22,8 +20,6 @@ module Imgur
       raise ImgurError if response.response_code >= 400
       response
     rescue ImgurError
-      Rails.logger.error "Error"
-      Rails.logger.error response.inspect
       error = JSON.parse(response.body)["data"]["error"]
       refresh_token && (tries -= 1).zero? ? (raise ImgurError.new(error)) : retry
     end
@@ -36,8 +32,6 @@ module Imgur
       raise ImgurError if response.response_code >= 400
       response
     rescue ImgurError
-      Rails.logger.error "Error"
-      Rails.logger.error response.inspect
       error = response.body["data"]["error"]
       refresh_token && (tries -= 1).zero? ? (raise ImgurError.new(error)) : retry
     end
