@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   validates_presence_of :name, :email, :username
   validates_uniqueness_of :email, :username
   validates_format_of :email, with: /@/
-  validates_format_of :username, with: /[-a-z0-9]+/, message: "can only contain letters, numbers, and dashes"
+  validates_format_of :username, with: /\A[a-z0-9-]+\z/, message: "can only contain letters, numbers, and dashes"
 
   has_secure_password validations: true
 
