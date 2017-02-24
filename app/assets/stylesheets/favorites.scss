@@ -1,10 +1,13 @@
-.favorite-image {
+.favorite-image, .view-image {
   position: absolute;
   top: 0;
-  right: 50%;
   padding: 10px 10px 20px 20px;
-  margin-right: -80px;
 }
-.images-show .favorite-image {
-  margin-right: -320px;
+.favorite-image {
+  left: 50%;
+  margin-left: -80px;
+}
+.view-image {
+  right: 50%;
+  margin-right: -80px;
 }

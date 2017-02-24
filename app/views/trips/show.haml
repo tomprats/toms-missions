@@ -39,7 +39,8 @@
             = image_tag image.thumbnail, class: "img-responsive center-block"
           - if current_user
             = link_to "#", class: "favorite-image", data: { image_id: image.id } do
-              = fa_icon "2x heart#{"-o" unless current_user.favorites.exists?(image_id: image.id)}"
+              = fa_icon "2x fw heart#{"-o" unless current_user.favorites.exists?(image_id: image.id)}"
+          = link_to fa_icon("2x fw play"), image_path(image.id), class: "view-image"
     .text-center= paginate @images
 
 = render "layouts/partials/overlay"

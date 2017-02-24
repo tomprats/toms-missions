@@ -4,12 +4,19 @@
   - content_for :meta_title, "#{user.name}'s Missions"
 - content_for :meta_description, trip.try(:name)
 - content_for :meta_image, @image.large
-%h1
-  = link_to(trip.name, trip_path(trip)) + " - " if trip
-  = link_to(user.name, user_path(username: user.username)) if user
+%h1= trip.name
+.btn-group.btn-group-justified.hidden-xs
+  = link_to "Trip", trip_path(trip.uid), class: "btn btn-success"
+  = link_to(user.name, user_path(username: user.username), class: "btn btn-success") if user
   - if current_user
-    = "-"
-    = link_to "#", class: "favorite-link", data: { image_id: @image.id } do
-      = fa_icon "heart#{"-o" unless current_user.favorites.exists?(image_id: @image.id)}"
+    = link_to "#", class: "btn btn-success favorite-link", data: { image_id: @image.id } do
+      = fa_icon "fw heart#{"-o" unless current_user.favorites.exists?(image_id: @image.id)}"
+.visible-xs
+  = link_to "Trip", trip_path(trip.uid), class: "btn btn-success btn-block"
+  = link_to(user.name, user_path(username: user.username), class: "btn btn-success btn-block") if user
+  - if current_user
+    = link_to "#", class: "btn btn-success btn-block favorite-link", data: { image_id: @image.id } do
+      = fa_icon "fw heart#{"-o" unless current_user.favorites.exists?(image_id: @image.id)}"
+%h1
 .row.text-center
   .col-xs-12= image_tag @image.large, class: "img-responsive center-block"

@@ -26,7 +26,8 @@
               = image_tag image.thumbnail, class: "img-responsive center-block"
             - if current_user
               = link_to "#", class: "favorite-image", data: { image_id: image.id } do
-                = fa_icon "2x heart#{"-o" unless current_user.favorites.exists?(image_id: image.id)}"
+                = fa_icon "2x fw heart#{"-o" unless current_user.favorites.exists?(image_id: image.id)}"
+            = link_to fa_icon("2x fw play"), image_path(image.id), class: "view-image"
             = link_to "Remove", delete_mission_image_path(username: current_user.username, trip_uid: @trip.uid, id: image.id), method: :delete
       = paginate @images
 
