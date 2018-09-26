@@ -16,3 +16,4 @@
 /tmp
 
 config/local_variables.rb
+config/secrets.yml

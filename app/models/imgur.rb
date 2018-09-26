@@ -3,7 +3,7 @@ module Imgur
     def self.api_get(url)
       tries ||= 2
       refresh_token if token_expired?
-      headers = { "Authorization" => "Bearer #{ENV["IMGUR_TOKEN"]}" }
+      headers = { "Authorization" => "Bearer #{Rails.application.secrets.imgur_token}" }
       response = Typhoeus.get(url, headers: headers)
       raise ImgurError if response.response_code >= 400
       response
@@ -15,7 +15,7 @@ module Imgur
     def self.api_post(url, params)
       tries ||= 2
       refresh_token if token_expired?
-      headers = { "Authorization" => "Bearer #{ENV["IMGUR_TOKEN"]}" }
+      headers = { "Authorization" => "Bearer #{Rails.application.secrets.imgur_token}" }
       response = Typhoeus.post(url, headers: headers, body: params)
       raise ImgurError if response.response_code >= 400
       response
@@ -27,7 +27,7 @@ module Imgur
     def self.api_delete(url)
       tries ||= 2
       refresh_token if token_expired?
-      headers = { "Authorization" => "Bearer #{ENV["IMGUR_TOKEN"]}" }
+      headers = { "Authorization" => "Bearer #{Rails.application.secrets.imgur_token}" }
       response = Typhoeus.delete(url, headers: headers)
       raise ImgurError if response.response_code >= 400
       response
@@ -38,32 +38,32 @@ module Imgur
 
     def self.refresh_token
       token_from_redis = $redis.get("TOMSMISSIONS-IMGUR_TOKEN")
-      if ENV["IMGUR_TOKEN"] == token_from_redis || token_from_redis.blank?
+      if Rails.application.secrets.imgur_token == token_from_redis || token_from_redis.blank?
         url = "https://api.imgur.com/oauth2/token"
         params = {
-          refresh_token: ENV["IMGUR_REFRESH"],
-          client_id: ENV["IMGUR_ID"],
-          client_secret: ENV["IMGUR_SECRET"],
+          refresh_token: Rails.application.secrets.imgur_refresh,
+          client_id: Rails.application.secrets.imgur_id,
+          client_secret: Rails.application.secrets.imgur_secret,
           grant_type: :refresh_token
         }
-        headers = { "Authorization" => "Bearer #{ENV["IMGUR_ID"]}" }
+        headers = { "Authorization" => "Bearer #{Rails.application.secrets.imgur_id}" }
         response = Typhoeus.post(url, headers: headers, body: params)
         body = JSON.parse(response.body)
 
-        ENV["IMGUR_TIMEOUT"] = calculate_timeout(body["expires_in"])
-        ENV["IMGUR_TOKEN"] = body["access_token"]
-        $redis.set("TOMSMISSIONS-IMGUR_TIMEOUT", ENV["IMGUR_TIMEOUT"])
-        $redis.set("TOMSMISSIONS-IMGUR_TOKEN", ENV["IMGUR_TOKEN"])
+        Rails.application.secrets.imgur_timeout = calculate_timeout(body["expires_in"])
+        Rails.application.secrets.imgur_token = body["access_token"]
+        $redis.set("TOMSMISSIONS-IMGUR_TIMEOUT", Rails.application.secrets.imgur_timeout)
+        $redis.set("TOMSMISSIONS-IMGUR_TOKEN", Rails.application.secrets.imgur_token)
       else
-        ENV["IMGUR_TIMEOUT"] = $redis.get("TOMSMISSIONS-IMGUR_TIMEOUT")
-        ENV["IMGUR_TOKEN"] = $redis.get("TOMSMISSIONS-IMGUR_TOKEN")
+        Rails.application.secrets.imgur_timeout = $redis.get("TOMSMISSIONS-IMGUR_TIMEOUT")
+        Rails.application.secrets.imgur_token = $redis.get("TOMSMISSIONS-IMGUR_TOKEN")
       end
 
       true
     end
 
     def self.token_expired?
-      (ENV["IMGUR_TIMEOUT"].try(:to_i) || 0) < DateTime.now.to_i
+      (Rails.application.secrets.imgur_timeout.try(:to_i) || 0) < DateTime.now.to_i
     end
 
     def self.calculate_timeout(expires_in)
@@ -77,7 +77,7 @@ module Imgur
 
   class Album < Base
     def self.all
-      url = "https://api.imgur.com/3/account/#{ENV["IMGUR_USERNAME"]}/albums"
+      url = "https://api.imgur.com/3/account/#{Rails.application.secrets.imgur_username}/albums"
       JSON.parse(api_get(url).body)["data"]
     end
 

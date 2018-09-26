@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "2.2.2"
+ruby "2.5.0"
 
 gem "rails"
 
@@ -17,12 +17,10 @@ gem "pg"
 gem "pickadate-rails"
 gem "redis"
 gem "sass-rails"
-gem "thin"
+gem "unicorn"
 gem "turbolinks"
 gem "typhoeus"
 gem "uglifier"
-
-gem "rails_12factor", group: :production
 
 # Development
 group :development do

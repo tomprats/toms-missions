@@ -27,10 +27,7 @@ module TomsMissions
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    local_env = File.join(Rails.root, "config", "local_variables.rb")
-    load(local_env) if File.exists?(local_env)
-
-    ENV["IMGUR_TIMEOUT"] = DateTime.now.to_i.to_s
-    ENV["IMGUR_TOKEN"] = ""
+    Rails.application.secrets.imgur_timeout = DateTime.now.to_i.to_s
+    Rails.application.secrets.imgur_token = ""
   end
 end

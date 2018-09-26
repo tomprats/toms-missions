@@ -1,5 +1,5 @@
 class TripsController < ApplicationController
-  before_filter :require_admin, except: [:index, :show]
+  before_action :require_admin, except: [:index, :show]
 
   def index
     @trips = Trip.all.includes(:images)
