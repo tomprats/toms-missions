@@ -1,4 +1,4 @@
-class CreateJoinTableUserTrip < ActiveRecord::Migration
+class CreateJoinTableUserTrip < ActiveRecord::Migration[5.2]
   def change
     create_table :missions do |t|
       t.integer :user_id
